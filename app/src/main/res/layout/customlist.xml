@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+        android:layout_width="70dip"
+        android:layout_height="wrap_content"
+        android:id="@+id/customListHead1"
+        android:textColor="#FFFFFF"
+            android:paddingRight="5dip"
+            android:textAlignment="viewEnd"
+
+        android:hint="head1"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/customListText1"
+            android:textColor="#FFFFFF"
+            android:hint="text1"
+            android:paddingLeft="2dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <TextView
+            android:layout_width="70dip"
+            android:layout_height="wrap_content"
+            android:hint="head 2"
+            android:id="@+id/customListHead2"
+            android:paddingRight="5dip"
+            android:textAlignment="viewEnd"
+            android:textColor="#FFFFFF"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="text2"
+                android:id="@+id/customListText2"
+                android:textColor="#FFFFFF"
+                android:paddingLeft="2dp"/>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <TextView
+            android:layout_width="70dip"
+            android:hint="head3"
+            android:layout_height="wrap_content"
+            android:id="@+id/customListHead3"
+            android:paddingRight="5dip"
+            android:textAlignment="viewEnd"
+            android:textColor="#FFFFFF"
+      />
+        <TextView
+        android:layout_width="wrap_content"
+        android:hint="text3"
+        android:layout_height="wrap_content"
+        android:id="@+id/customListText3"
+        android:paddingLeft="2dp"
+        android:textColor="#FFFFFF"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="70dip"
+            android:layout_height="wrap_content"
+            android:id="@+id/customListHead4"
+            android:paddingRight="5dip"
+            android:textAlignment="viewEnd"
+            android:text="head4"
+            android:textColor="#FFFFFF"
+            />
+
+        <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/customListText4"
+        android:paddingLeft="2dp"
+            android:text="text4"
+        android:textColor="#FFFFFF"/>
+        </LinearLayout>
+</LinearLayout>

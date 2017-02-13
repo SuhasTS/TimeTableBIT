@@ -1,0 +1,58 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#b4000000"
+    android:orientation="vertical"
+    tools:context="com.example.sharathbhargav.timetable.changeDb">
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+<RadioGroup
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+   android:gravity="center"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="130dp"
+    android:orientation="vertical"
+    android:id="@+id/radioGroupChangeDb"
+
+    >
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2016-17 Even Sem"
+        android:textSize="25dp"
+        android:id="@+id/radioButtonEven"
+        android:layout_gravity="center"
+
+
+        android:layout_centerVertical="true"
+        android:buttonTint="#42A5F5"
+        android:layout_centerHorizontal="true" />
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2016-17 Odd Sem"
+        android:textSize="25dp"
+        android:id="@+id/radioButtonOdd"
+        android:buttonTint="#42A5F5"
+        android:layout_marginTop="30dp"
+
+        android:layout_below="@+id/radioGroupChangeDb"
+        android:layout_alignStart="@+id/radioButtonEven" />
+</RadioGroup>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set Time Table"
+        android:id="@+id/buttonSetTimeTable"
+        android:layout_below="@+id/radioGroupChangeDb"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="86dp" />
+
+
+</RelativeLayout>

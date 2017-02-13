@@ -1,0 +1,112 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="menu.room"
+    android:background="#b4000000"
+
+    >
+    <TextClock
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textClockRoom"
+        android:format12Hour="E\nhh:mm:ss a"
+        android:textStyle="bold"
+        android:textSize="40dp"
+        android:layout_gravity="center"
+        android:layout_alignBottom="@+id/timePicker2"
+        android:layout_alignEnd="@+id/timePicker2"
+        android:layout_marginBottom="55dp" />
+
+    <AutoCompleteTextView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/roomSearch"
+        android:inputType="number"
+        android:focusable="true"
+        android:hint="Room No"
+        android:layout_marginTop="40dp"
+        android:textColorHint="#616161"
+        android:textColor="#0091EA"
+        android:textAlignment="center"
+        android:background="@drawable/name_auto_draw"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search"
+        android:textStyle="bold"
+        android:textColor="#2196F3"
+        android:id="@+id/buttonRoomSearch"
+        android:textSize="25dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/name_button_shape"
+        android:layout_below="@+id/roomSearch"
+        android:layout_centerHorizontal="true" />
+
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+
+        android:id="@+id/roomRadioGroup"
+        android:layout_below="@+id/buttonRoomSearch"
+        android:layout_marginTop="28dp"
+        android:layout_alignEnd="@+id/textClockRoom"
+        android:layout_alignStart="@+id/timePicker2"
+        >
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/roomRadioCurrent"
+            android:text="Current time"
+            android:layout_alignTop="@+id/roomRadioCustom"
+            android:layout_toEndOf="@+id/roomRadioCustom"
+            android:layout_weight="0.28"
+            android:buttonTint="#42A5F5"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/roomRadioCustom"
+            android:layout_gravity="right"
+            android:text="Custom time"
+
+            android:layout_marginTop="33dp"
+            android:layout_below="@+id/buttonRoomSearch"
+            android:layout_toEndOf="@+id/roomRadioGroup"
+            android:layout_weight="0.63"
+            android:buttonTint="#42A5F5"/>
+
+
+    </RadioGroup>
+
+    <Spinner
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:id="@+id/roomDaySpinner"
+        android:visibility="invisible"
+        android:popupBackground="#0091Ea"
+        style="@style/spinner_backgorund"
+        android:layout_above="@+id/timePicker2"
+        android:layout_alignParentEnd="true" />
+
+    <TimePicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/timePicker2"
+        android:timePickerMode="spinner"
+        android:visibility="visible"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/buttonRoomSearch" />
+
+
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+</RelativeLayout>

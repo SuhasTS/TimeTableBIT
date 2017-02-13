@@ -1,0 +1,50 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#b4000000"
+    tools:context="com.example.sharathbhargav.timetable.daySem">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <Spinner
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:id="@+id/daySem_Semspinner"
+       style="@style/spinner_backgorund"
+        android:popupBackground="#0091Ea"
+        android:layout_above="@+id/daySem_daySpinner"
+        android:layout_marginBottom="250dp"
+
+        android:layout_centerHorizontal="true" />
+
+    <Spinner
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+
+        android:id="@+id/daySem_daySpinner"
+        style="@style/spinner_backgorund"
+        android:popupBackground="#0091Ea"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search"
+
+        android:textAlignment="center"
+        android:id="@+id/daySemSearchButton"
+        android:background="@drawable/name_button_shape"
+        android:textColor="#2196F3"
+        android:textStyle="bold"
+        android:textSize="25dp"
+        android:layout_marginTop="63dp"
+        android:layout_below="@+id/daySem_daySpinner"
+        android:layout_centerHorizontal="true" />
+
+
+
+
+
+</RelativeLayout>

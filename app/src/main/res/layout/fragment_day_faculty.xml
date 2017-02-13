@@ -1,0 +1,55 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.sharathbhargav.timetable.dayFaculty"
+    android:background="#b4000000">
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search"
+        android:textColor="#2196F3"
+        android:textStyle="bold"
+        android:textSize="25dp"
+        android:id="@+id/dayFacultySearchButton"
+        android:background="@drawable/name_button_shape"
+
+
+        android:layout_below="@+id/dayFacultydaySpinner"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="91dp" />
+
+    <Spinner
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:id="@+id/dayFacultydaySpinner"
+        style="@style/spinner_backgorund"
+        android:popupBackground="#0091Ea"
+
+
+        android:layout_below="@+id/dayFacultyautoComplete"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="112dp" />
+
+    <AutoCompleteTextView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="50dp"
+        android:inputType="textPersonName"
+        android:id="@+id/dayFacultyautoComplete"
+        android:background="@drawable/name_auto_draw"
+        android:hint="Faculty Name"
+        android:textColorHint="#616161"
+        android:textColor="#0091EA"
+        android:textAlignment="center"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="48dp" />
+
+</RelativeLayout>

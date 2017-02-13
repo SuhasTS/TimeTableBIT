@@ -1,0 +1,21 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <style name="spinner_backgorund">
+        <item name="android:background">@drawable/spinner_drop_down</item>
+        <item name="android:layout_margin">5dp</item>
+    </style>
+    <style name="alertdialog_theme" parent="Theme.AppCompat.Dialog.Alert">
+
+        <item name="android:background">@color/autoComplete</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+
+</resources>
