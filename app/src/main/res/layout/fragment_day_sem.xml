@@ -43,6 +43,12 @@
         android:layout_below="@+id/daySem_daySpinner"
         android:layout_centerHorizontal="true" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/daySemViewEntireWeekButton"
+        android:text="View Entire week schedule"/>
+
 
 
 

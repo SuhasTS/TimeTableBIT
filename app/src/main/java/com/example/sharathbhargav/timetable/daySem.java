@@ -12,6 +12,7 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -42,7 +43,7 @@ import java.util.List;
  * Use the {@link daySem#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class daySem extends Fragment {
+public class daySem extends Fragment implements DisplayEntireWeek.OnFragmentInteractionListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -55,7 +56,7 @@ public class daySem extends Fragment {
     private String mParam1;
     private String mParam2;
     Spinner semSpinner,daySpinner;//Spinners for selecting day and sem
-    Button search;
+    Button search,viewEntireWeek;
     DatabaseHelper myDbHelper;
     ListView l;
     RecyclerView recyclerView;
@@ -107,6 +108,8 @@ public class daySem extends Fragment {
         semSpinner=(Spinner)view.findViewById(R.id.daySem_Semspinner);
         daySpinner=(Spinner)view.findViewById(R.id.daySem_daySpinner);
         search=(Button)view.findViewById(R.id.daySemSearchButton);
+        viewEntireWeek=(Button)view.findViewById(R.id.daySemViewEntireWeekButton);
+
 
         List<String> categories = new ArrayList<String>();
         categories.add("Monday");
@@ -231,6 +234,23 @@ public class daySem extends Fragment {
         });
 
 
+
+
+        viewEntireWeek.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            DisplayEntireWeek fragment=new DisplayEntireWeek();
+                Bundle b=new Bundle();
+                b.putString("incoming","daySem");
+                b.putString("data",customSem[0]);
+                fragment.setArguments(b);
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, fragment)
+                        .commit();
+            }
+        });
+
         return view;
     }
 
@@ -277,6 +297,11 @@ public class daySem extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 
     /**

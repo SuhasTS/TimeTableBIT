@@ -9,6 +9,7 @@ import android.database.SQLException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,7 +38,7 @@ import java.util.List;
  * Use the {@link dayRoom#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class dayRoom extends Fragment {
+public class dayRoom extends Fragment implements DisplayEntireWeek.OnFragmentInteractionListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -48,7 +49,7 @@ public class dayRoom extends Fragment {
     private String mParam2;
     Spinner roomSpinner,daySpinner;
     ListView l;
-    Button search;
+    Button search,displayEntireWeek;
     DatabaseHelper myDbHelper;
     Cursor roomList,res;
     public static   ArrayList<display> displayArrayList;
@@ -94,7 +95,7 @@ public class dayRoom extends Fragment {
         roomSpinner=(Spinner)view.findViewById(R.id.dayRoom_Roomspinner);
         daySpinner=(Spinner)view.findViewById(R.id.dayRoom_daySpinner);
         search=(Button)view.findViewById(R.id.dayRoomSearchButton);
-
+        displayEntireWeek=(Button)view.findViewById(R.id.dayRoomDisplayEntireWeekButton);
         List<String> categories = new ArrayList<String>();
         categories.add("Monday");
         categories.add("Tuesday");
@@ -224,6 +225,22 @@ public class dayRoom extends Fragment {
             }
         });
 
+
+        displayEntireWeek.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DisplayEntireWeek fragment=new DisplayEntireWeek();
+                Bundle b=new Bundle();
+                b.putString("incoming","dayRoom");
+                b.putString("data",customRoom[0]);
+                fragment.setArguments(b);
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, fragment)
+                        .commit();
+            }
+        });
+
         return view;
     }
 
@@ -268,6 +285,11 @@ public class dayRoom extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 
     /**

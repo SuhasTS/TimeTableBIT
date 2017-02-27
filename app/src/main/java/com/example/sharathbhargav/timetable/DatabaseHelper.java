@@ -40,10 +40,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public DatabaseHelper(Context context) {
         super(context, DB_NAME, null, 10);
         this.myContext = context;
-        this.DB_PATH = "/data/data/" + context.getPackageName() + "/" + "databases/";
-        //this.DB_PATH=Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDownloads);
+        File databasesDir = new File("/data/data/" + myContext.getPackageName(), "DBFILES");
+        if (!databasesDir.exists()) {
+            if (!databasesDir.mkdirs()) {
+                Log.d("Tag1", "Oops! Failed create Testing  directory");
+            }
 
-        Log.e("Path 1", DB_PATH+""+DB_NAME);
+        }
+        this.DB_PATH=databasesDir.getPath()+File.separator;
     }
 
 
@@ -193,10 +197,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     {
         //Statement s=
         Cursor c= myDataBase.rawQuery("SELECT f.name,s.sem,s.sub from classes c,faculty f,subjects s WHERE\n" +
-                "c.room like '"+lName+"%' AND\n" +
+                "c.room like'"+lName+"%' AND\n" +
                 "c.day='"+day+"' AND\n" +
                 "c.slot='"+slot+"' AND\n" +
-                "f.fid=s..fid and\n" +
+                "f.fid=s.fid and\n" +
                 "c.mapid=s.mapid;",null);
         return c;
     }

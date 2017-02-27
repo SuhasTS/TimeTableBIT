@@ -26,6 +26,7 @@ public class display_dialog_general {
     Context context;
     String optionalTextFaculty="";
     DisplayMetrics metrics;
+    public display_dialog_general(){}
     public display_dialog_general(ArrayList<display> displayArrayList,View view,ArrayList<String> head_parameters,Context context,DisplayMetrics metrics)
     {
        // this.recyclerView=recyclerView;
@@ -64,7 +65,13 @@ public class display_dialog_general {
             }
         }
 
-
+            public recycler_view_adapter(ArrayList<display> displayArrayList1,ArrayList<String> head_params,Context context1)
+            {
+                displayArrayList=displayArrayList1;
+                head_parameters=head_params;
+                context=context1;
+            }
+public  recycler_view_adapter(){}
 
         @Override
         public myViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -100,6 +107,7 @@ public class display_dialog_general {
 
         @Override
         public int getItemCount() {
+            //return 5;
             return displayArrayList.size();
         }
 
@@ -143,5 +151,8 @@ public class display_dialog_general {
 
         Log.v("Testing Button","Inflate started");
     }
+
+
+
 
 }

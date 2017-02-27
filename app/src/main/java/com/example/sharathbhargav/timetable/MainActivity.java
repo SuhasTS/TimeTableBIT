@@ -1,6 +1,7 @@
 package com.example.sharathbhargav.timetable;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -25,7 +26,7 @@ import menu.room;
 * Each fragment is deployed according to the selection in nav drawer*/
 
 
-public class MainActivity extends AppCompatActivity implements  nameFragment.OnFragmentInteractionListener,changeDb.OnFragmentInteractionListener ,dayRoom.OnFragmentInteractionListener, room.OnFragmentInteractionListener, dayFaculty.OnFragmentInteractionListener, daySem.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements  nameFragment.OnFragmentInteractionListener,changeDb.OnFragmentInteractionListener ,dayRoom.OnFragmentInteractionListener, room.OnFragmentInteractionListener, dayFaculty.OnFragmentInteractionListener, daySem.OnFragmentInteractionListener,DisplayEntireWeek.OnFragmentInteractionListener {
     DatabaseHelper myDbHelper;
     DrawerLayout  drawerLayout;
     FragmentTransaction fragmentTransaction;
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements  nameFragment.OnF
         navigationView=(NavigationView) findViewById(R.id.navigationView);
 
 
-        toolbarText=(TextView)findViewById(R.id.toolbarText);
+      toolbarText=(TextView)findViewById(R.id.toolbarText);
         drawerLayout=(DrawerLayout) findViewById(R.id.drawer_layout);
 
         actionBarDrawerToggle=new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.drawer_open,R.string.drawer_close){
@@ -88,6 +89,9 @@ public class MainActivity extends AppCompatActivity implements  nameFragment.OnF
 
                     case R.id.change:
                         changeDB(item);
+                        break;
+                    case R.id.temp:
+
                         break;
 
                 }

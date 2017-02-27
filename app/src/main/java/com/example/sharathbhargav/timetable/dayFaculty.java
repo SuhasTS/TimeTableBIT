@@ -10,6 +10,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -41,7 +42,7 @@ import java.util.List;
  * Use the {@link dayFaculty#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class dayFaculty extends Fragment {
+public class dayFaculty extends Fragment implements DisplayEntireWeek.OnFragmentInteractionListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -53,7 +54,7 @@ public class dayFaculty extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    Button search;
+    Button search,entireWeekDisplay;
     Spinner daySpin;
     ArrayAdapter<String> faculty_name;
     String[] fnames;
@@ -106,6 +107,8 @@ public class dayFaculty extends Fragment {
                 search=(Button)view.findViewById(R.id.dayFacultySearchButton);
         daySpin=(Spinner)view.findViewById(R.id.dayFacultydaySpinner);
         nameInput=(AutoCompleteTextView)view.findViewById(R.id.dayFacultyautoComplete);
+
+        entireWeekDisplay=(Button)view.findViewById(R.id.dayFacultyEntireWeekDisplay);
         nameInput.setAdapter(faculty_name);
         List<String> categories = new ArrayList<String>();
         categories.add("Monday");
@@ -143,12 +146,13 @@ public class dayFaculty extends Fragment {
                 mgr.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
             }
         });
+
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String day=customDay[0].substring(0,3);
                 day=day.toUpperCase();
-                String lName=nameInput.getText().toString();
+              String lName =nameInput.getText().toString();
                 nameInput.setText("");
                 if(lName.length()>4)
                     res=myDbHelper.getDayFaculty(lName,day);
@@ -175,6 +179,23 @@ public class dayFaculty extends Fragment {
             }
         });
 
+                entireWeekDisplay.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String lName =nameInput.getText().toString();
+                        if(lName.length()>1) {
+                            DisplayEntireWeek fragment = new DisplayEntireWeek();
+                            Bundle b = new Bundle();
+                            b.putString("incoming", "dayFaculty");
+                            b.putString("data", lName);
+                            fragment.setArguments(b);
+                            FragmentManager fragmentManager = getFragmentManager();
+                            fragmentManager.beginTransaction()
+                                    .replace(R.id.container, fragment)
+                                    .commit();
+                        }
+                    }
+                });
 
 
 
@@ -249,6 +270,11 @@ public class dayFaculty extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 
     /**

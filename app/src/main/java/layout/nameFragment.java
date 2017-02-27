@@ -34,12 +34,18 @@ import android.widget.Toast;
 import com.example.sharathbhargav.timetable.DatabaseHelper;
 import com.example.sharathbhargav.timetable.R;
 
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+
+import tourguide.tourguide.Overlay;
+import tourguide.tourguide.Pointer;
+import tourguide.tourguide.ToolTip;
+import tourguide.tourguide.TourGuide;
 
 
 public class nameFragment extends Fragment {
@@ -65,6 +71,9 @@ public class nameFragment extends Fragment {
     RadioButton radioCurrent,radioCustom;
     TimePicker timePicker;
     TextClock textClock;
+
+    TourGuide mTourGuideHandler;
+
     public nameFragment() {
         // Required empty public constructor
     }
@@ -143,6 +152,14 @@ public class nameFragment extends Fragment {
 
         // Spinner click listener
 
+        mTourGuideHandler = TourGuide.init(getActivity()).with(TourGuide.Technique.Click)
+                .setPointer(new Pointer())
+                .setToolTip(new ToolTip().setTitle("Welcome!").setDescription("Click on Get Started to begin..."))
+                .setOverlay(new Overlay())
+                .playOn(nameInput);
+
+
+
         nameInput.setDropDownBackgroundDrawable(new ColorDrawable(getContext().getResources().getColor(R.color.autoComplete)));
         // Spinner Drop down elements
         List<String> categories = new ArrayList<String>();
@@ -212,6 +229,13 @@ public class nameFragment extends Fragment {
 
             }
         });
+
+        nameInput.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mTourGuideHandler.cleanUp();
+            }
+        });
         nameInput.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -222,6 +246,14 @@ public class nameFragment extends Fragment {
         testButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+
+
+                mTourGuideHandler.cleanUp();
+
+
+
 
                 // nameRoomDisplay.setText("");
                 //nameSemDisplay.setText("");

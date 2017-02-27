@@ -22,6 +22,9 @@
         <item
             android:id="@+id/change"
             android:title="Change Time Table"/>
+    <item
+        android:id="@+id/temp"
+        android:title="temp"/>
 
 
 </menu>
