@@ -48,7 +48,7 @@ public class room extends Fragment {
     Calendar calendar;
     DatabaseHelper myDbHelper1;
     int timeArray[],slotTime[];
-
+TextView toolbarText;
     //String[] RoomNo;
     ArrayList<String> RoomNo;
     ArrayAdapter<String> Room_no;
@@ -124,9 +124,9 @@ public class room extends Fragment {
         roomSearch1=(AutoCompleteTextView)view.findViewById(R.id.roomSearch);
         //roomText=(TextView) view.findViewById(R.id.roomText);
 
+toolbarText=(TextView)getActivity().findViewById(R.id.toolbarText);
 
-
-
+        toolbarText.setText("Search by Room Number");
 
 
         roomRadioGroup=(RadioGroup)view.findViewById(R.id.roomRadioGroup);

@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -29,7 +31,7 @@ public class display_dialog_general {
     public display_dialog_general(){}
     public display_dialog_general(ArrayList<display> displayArrayList,View view,ArrayList<String> head_parameters,Context context,DisplayMetrics metrics)
     {
-       // this.recyclerView=recyclerView;
+        // this.recyclerView=recyclerView;
         this.displayArrayList=displayArrayList;
         this.view=view;
         this.head_parameters=head_parameters;
@@ -52,6 +54,8 @@ public class display_dialog_general {
     public  class recycler_view_adapter extends RecyclerView.Adapter<recycler_view_adapter.myViewHolder> {
         public class myViewHolder extends RecyclerView.ViewHolder {
             public TextView head1, head2, head3, head4, disp1, disp2, disp3, disp4;
+            CardView cardGeneral;
+            LinearLayout linearInsideCard;
             public myViewHolder(View view) {
                 super(view);
                 head1 = (TextView) view.findViewById(R.id.customListHead1);
@@ -62,16 +66,18 @@ public class display_dialog_general {
                 disp2 = (TextView) view.findViewById(R.id.customListText2);
                 disp3 = (TextView) view.findViewById(R.id.customListText3);
                 disp4 = (TextView) view.findViewById(R.id.customListText4);
+                cardGeneral=(CardView)view.findViewById(R.id.cardGeneral);
+                linearInsideCard=(LinearLayout)view.findViewById(R.id.linearInsideCard);
             }
         }
 
-            public recycler_view_adapter(ArrayList<display> displayArrayList1,ArrayList<String> head_params,Context context1)
-            {
-                displayArrayList=displayArrayList1;
-                head_parameters=head_params;
-                context=context1;
-            }
-public  recycler_view_adapter(){}
+        public recycler_view_adapter(ArrayList<display> displayArrayList1,ArrayList<String> head_params,Context context1)
+        {
+            displayArrayList=displayArrayList1;
+            head_parameters=head_params;
+            context=context1;
+        }
+        public  recycler_view_adapter(){}
 
         @Override
         public myViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -83,14 +89,14 @@ public  recycler_view_adapter(){}
 
         @Override
         public void onBindViewHolder(myViewHolder holder, int position) {
-            holder.head1.setTextColor(position%2!=0 ? Color.BLACK:Color.WHITE);
-            holder.head2.setTextColor(position%2!=0 ? Color.BLACK:Color.WHITE);
-            holder.head3.setTextColor(position%2!=0 ? Color.BLACK:Color.WHITE);
-            holder.head4.setTextColor(position%2!=0 ? Color.BLACK:Color.WHITE);
-            holder.disp1.setTextColor(position%2!=0 ? Color.BLACK:Color.WHITE);
-            holder.disp2.setTextColor(position%2!=0 ? Color.BLACK:Color.WHITE);
-            holder.disp3.setTextColor(position%2!=0 ? Color.BLACK:Color.WHITE);
-            holder.disp4.setTextColor(position%2!=0 ? Color.BLACK:Color.WHITE);
+            holder.head1.setTextColor(position%2!=0 ? Color.BLACK:Color.BLACK);
+            holder.head3.setTextColor(position%2!=0 ? Color.BLACK:Color.BLACK);
+            holder.head4.setTextColor(position%2!=0 ? Color.BLACK:Color.BLACK);
+            holder.head2.setTextColor(position%2!=0 ? Color.BLACK:Color.BLACK);
+            holder.disp1.setTextColor(position%2!=0 ? Color.BLACK:Color.BLACK);
+            holder.disp2.setTextColor(position%2!=0 ? Color.BLACK:Color.BLACK);
+            holder.disp3.setTextColor(position%2!=0 ? Color.BLACK:Color.BLACK);
+            holder.disp4.setTextColor(position%2!=0 ? Color.BLACK:Color.BLACK);
             holder.head1.setText(head_parameters.get(0));
             holder.head2.setText(head_parameters.get(1));
             holder.head3.setText(head_parameters.get(2));
@@ -102,6 +108,7 @@ public  recycler_view_adapter(){}
                 holder.disp2.setText(displayArrayList.get(position).string2.substring(0,displayArrayList.get(position).string2.length()-1));
             holder.disp3.setText(displayArrayList.get(position).string3);
             holder.disp4.setText(displayArrayList.get(position).string4);
+            holder.linearInsideCard.setBackgroundResource(position%2==0 ? R.color.color2 : R.color.color1);
         }
 
 
@@ -112,45 +119,32 @@ public  recycler_view_adapter(){}
         }
 
     }
-    public class DividerItemDecoration extends RecyclerView.ItemDecoration {
-
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-
-            int position = parent.getChildAdapterPosition(view);
-            view.setBackgroundResource(position%2==0 ? R.color.black : R.color.white);
-        }
-    }
 
 
     public void showDialog() {
-
+        AlertDialog alert;
         recyclerView=(RecyclerView)view.findViewById(R.id.recycler_view);
-        AlertDialog.Builder builder = new AlertDialog.Builder(context,R.style.alertdialog_theme);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.alertdialog_theme);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new DividerItemDecoration());
         recycler_view_adapter adapter=new recycler_view_adapter();
         recyclerView.setAdapter(adapter);
-        builder.setTitle("Schedule");
+        //builder.setTitle("Schedule");
         builder.setView(view);
-        builder.setPositiveButton("OK", null);
-        Log.v("Optional text",optionalTextFaculty+"sdbfkj");
-        if(optionalTextFaculty.equals("")) {
-            builder.setMessage("Please enter faculty name");
-        Log.v("Optional text",optionalTextFaculty+"askcfjfh");
-        }
-        AlertDialog alert=builder.create();
-        alert.show();
-        int height = metrics.heightPixels;
-        int width = metrics.widthPixels;
-        if(displayArrayList.size()>7)
-            alert.getWindow().setLayout(width,height-50);
+        builder.setCancelable(true);
+        //builder.setPositiveButton("OK", null);
+        alert=builder.create();
 
-        Log.v("Testing Button","Inflate started");
+        alert.show();
+        // int height = metrics.heightPixels;
+        // int width = metrics.widthPixels;
+        // if(displayArrayList.size()>7)
+        //     alert.getWindow().setLayout(width-100,height-100);
+        // //alert.getWindow().setBackgroundDrawableResource(R.drawable.dialog_border);
+        // Log.v("Testing Button","Inflate started");
     }
+
 
 
 

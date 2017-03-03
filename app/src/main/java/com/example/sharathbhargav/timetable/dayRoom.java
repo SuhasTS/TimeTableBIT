@@ -52,6 +52,7 @@ public class dayRoom extends Fragment implements DisplayEntireWeek.OnFragmentInt
     Button search,displayEntireWeek;
     DatabaseHelper myDbHelper;
     Cursor roomList,res;
+    TextView toolbarText;
     public static   ArrayList<display> displayArrayList;
     private OnFragmentInteractionListener mListener;
 
@@ -91,7 +92,8 @@ public class dayRoom extends Fragment implements DisplayEntireWeek.OnFragmentInt
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_day_room, container, false);
         databaseCaller();
-
+    toolbarText=(TextView)getActivity().findViewById(R.id.toolbarText);
+        toolbarText.setText("Day schedule :Room");
         roomSpinner=(Spinner)view.findViewById(R.id.dayRoom_Roomspinner);
         daySpinner=(Spinner)view.findViewById(R.id.dayRoom_daySpinner);
         search=(Button)view.findViewById(R.id.dayRoomSearchButton);
@@ -236,7 +238,7 @@ public class dayRoom extends Fragment implements DisplayEntireWeek.OnFragmentInt
                 fragment.setArguments(b);
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, fragment)
+                        .replace(R.id.container, fragment).addToBackStack("dayRoom")
                         .commit();
             }
         });

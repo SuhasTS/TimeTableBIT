@@ -55,6 +55,7 @@ public class daySem extends Fragment implements DisplayEntireWeek.OnFragmentInte
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    TextView toolbarText;
     Spinner semSpinner,daySpinner;//Spinners for selecting day and sem
     Button search,viewEntireWeek;
     DatabaseHelper myDbHelper;
@@ -104,7 +105,8 @@ public class daySem extends Fragment implements DisplayEntireWeek.OnFragmentInte
         View view=inflater.inflate(R.layout.fragment_day_sem, container, false);
         databaseCaller();
 
-
+toolbarText=(TextView)getActivity().findViewById(R.id.toolbarText);
+        toolbarText.setText("Day schedule : Sem");
         semSpinner=(Spinner)view.findViewById(R.id.daySem_Semspinner);
         daySpinner=(Spinner)view.findViewById(R.id.daySem_daySpinner);
         search=(Button)view.findViewById(R.id.daySemSearchButton);
@@ -246,7 +248,7 @@ public class daySem extends Fragment implements DisplayEntireWeek.OnFragmentInte
                 fragment.setArguments(b);
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, fragment)
+                        .replace(R.id.container, fragment).addToBackStack("daySem")
                         .commit();
             }
         });

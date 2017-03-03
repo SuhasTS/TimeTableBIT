@@ -44,17 +44,20 @@ import java.util.List;
 
 import tourguide.tourguide.Overlay;
 import tourguide.tourguide.Pointer;
+import tourguide.tourguide.Sequence;
 import tourguide.tourguide.ToolTip;
 import tourguide.tourguide.TourGuide;
 
 
 public class nameFragment extends Fragment {
+    static boolean firstRun=true;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private String mParam1;
     private String mParam2;
     AutoCompleteTextView nameInput;
+    TextView toolbarText;
     String lName;
     private OnFragmentInteractionListener mListener;
     Button testButton;
@@ -73,6 +76,7 @@ public class nameFragment extends Fragment {
     TextClock textClock;
 
     TourGuide mTourGuideHandler;
+
 
     public nameFragment() {
         // Required empty public constructor
@@ -135,6 +139,9 @@ public class nameFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_name,container,false);
 
+
+        toolbarText=(TextView)getActivity().findViewById(R.id.toolbarText);
+        toolbarText.setText("Search by Faculty name");
         testButton=(Button)view.findViewById(R.id.buttonNameSearch);
      //   nameHead=(TextView)view.findViewById(R.id.nameText);
         nameInput=(AutoCompleteTextView)view.findViewById(R.id.nameSearch);
@@ -152,11 +159,6 @@ public class nameFragment extends Fragment {
 
         // Spinner click listener
 
-        mTourGuideHandler = TourGuide.init(getActivity()).with(TourGuide.Technique.Click)
-                .setPointer(new Pointer())
-                .setToolTip(new ToolTip().setTitle("Welcome!").setDescription("Click on Get Started to begin..."))
-                .setOverlay(new Overlay())
-                .playOn(nameInput);
 
 
 
@@ -230,12 +232,7 @@ public class nameFragment extends Fragment {
             }
         });
 
-        nameInput.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mTourGuideHandler.cleanUp();
-            }
-        });
+
         nameInput.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -249,12 +246,7 @@ public class nameFragment extends Fragment {
 
 
 
-
-                mTourGuideHandler.cleanUp();
-
-
-
-
+           //
                 // nameRoomDisplay.setText("");
                 //nameSemDisplay.setText("");
                 //nameSubDisplay.setText("");
@@ -400,4 +392,6 @@ public class nameFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
 }

@@ -27,6 +27,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -54,6 +55,7 @@ public class dayFaculty extends Fragment implements DisplayEntireWeek.OnFragment
 
     private OnFragmentInteractionListener mListener;
 
+    TextView toolbarText;
     Button search,entireWeekDisplay;
     Spinner daySpin;
     ArrayAdapter<String> faculty_name;
@@ -105,9 +107,11 @@ public class dayFaculty extends Fragment implements DisplayEntireWeek.OnFragment
         databaseCaller();
         recyclerView=(RecyclerView) view.findViewById(R.id.recycler_view);
                 search=(Button)view.findViewById(R.id.dayFacultySearchButton);
+
+        toolbarText=(TextView)getActivity().findViewById(R.id.toolbarText);
         daySpin=(Spinner)view.findViewById(R.id.dayFacultydaySpinner);
         nameInput=(AutoCompleteTextView)view.findViewById(R.id.dayFacultyautoComplete);
-
+    toolbarText.setText("Day schedule : Faculty");
         entireWeekDisplay=(Button)view.findViewById(R.id.dayFacultyEntireWeekDisplay);
         nameInput.setAdapter(faculty_name);
         List<String> categories = new ArrayList<String>();
@@ -189,10 +193,13 @@ public class dayFaculty extends Fragment implements DisplayEntireWeek.OnFragment
                             b.putString("incoming", "dayFaculty");
                             b.putString("data", lName);
                             fragment.setArguments(b);
+
                             FragmentManager fragmentManager = getFragmentManager();
                             fragmentManager.beginTransaction()
-                                    .replace(R.id.container, fragment)
+                                    .replace(R.id.container, fragment).addToBackStack("dayFaculty")
                                     .commit();
+                            toolbarText.setText("Entire Week Display");
+                            MainActivity.toolbarTitle="Day schedule : Faculty";
                         }
                     }
                 });

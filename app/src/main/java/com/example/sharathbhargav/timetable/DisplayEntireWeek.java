@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.mutualmobile.cardstack.CardStackLayout;
 
@@ -39,7 +40,8 @@ public class DisplayEntireWeek extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    String keyword,incoming;
+     String keyword,incoming;
+    TextView toolbarText;
     Cursor res;
     displayArraylist[] displayArrayList;
     DatabaseHelper myDbHelper;
@@ -100,41 +102,10 @@ View view;
    view=inflater.inflate(R.layout.fragment_display_entire_week, container, false);
 
         databaseCaller();
+
+        toolbarText=(TextView)getActivity().findViewById(R.id.toolbarText);
         cardStackLayout =(CardStackLayout)view.findViewById(R.id.cardStackEntireWeek);
-        back=(Button)view.findViewById(R.id.entireWeekDisplayBackButton);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                switch (incoming) {
-                    case "daySem":
-
-                    daySem fragment = new daySem();
-                    FragmentManager fragmentManager = getFragmentManager();
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.container, fragment)
-                            .commit();
-
-                        break;
-                    case "dayFaculty":
-                        dayFaculty fragment1 = new dayFaculty();
-                        FragmentManager fragmentManager1 = getFragmentManager();
-                        fragmentManager1.beginTransaction()
-                                .replace(R.id.container, fragment1)
-                                .commit();
-                        break;
-                    case "dayRoom":
-                        dayRoom fragment2 = new dayRoom();
-                        FragmentManager fragmentManager2 = getFragmentManager();
-                        fragmentManager2.beginTransaction()
-                                .replace(R.id.container, fragment2
-                                )
-                                .commit();
-                        break;
-
-                }
-            }
-        });
         cardStackLayout.setShowInitAnimation(true);
 
         //   cardStackLayout.setParallaxEnabled(pgDashboardCardPreferences.isParallaxEnabled());
@@ -342,7 +313,6 @@ View view;
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-
 
 
 

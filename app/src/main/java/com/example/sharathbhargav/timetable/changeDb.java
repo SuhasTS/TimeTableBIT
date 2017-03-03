@@ -60,7 +60,7 @@ public class changeDb extends Fragment implements nameFragment.OnFragmentInterac
     private String mParam1;
     private String mParam2;
 
-    TextView toolbarText;
+
     Button setDb,updateDb;
     ArrayList<String> link_list=new ArrayList<String>();
     ArrayList<String> fileDirExistingList=new ArrayList<String>();
@@ -76,6 +76,7 @@ public class changeDb extends Fragment implements nameFragment.OnFragmentInterac
     File databasesDir;
     RecyclerView recyclerView;
     ProgressDialog progress;
+    TextView toolbarText;
 
     public changeDb() {
         // Required empty public constructor
@@ -124,6 +125,9 @@ public class changeDb extends Fragment implements nameFragment.OnFragmentInterac
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(layoutManager);
+
+        toolbarText=(TextView)getActivity().findViewById(R.id.toolbarText);
+        toolbarText.setText("Change Time Table");
 
         fileDirExistingList.clear();
         existingFilesList();
