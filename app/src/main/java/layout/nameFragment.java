@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.annotation.IntegerRes;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -31,8 +32,15 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+
+import com.example.sharathbhargav.timetable.ChainTourGuide;
 import com.example.sharathbhargav.timetable.DatabaseHelper;
+import com.example.sharathbhargav.timetable.MainActivity;
+import com.example.sharathbhargav.timetable.Overlay;
 import com.example.sharathbhargav.timetable.R;
+import com.example.sharathbhargav.timetable.Sequence;
+import com.example.sharathbhargav.timetable.ToolTip;
+import com.example.sharathbhargav.timetable.TourGuide;
 
 
 import java.io.IOException;
@@ -42,15 +50,11 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-import tourguide.tourguide.Overlay;
-import tourguide.tourguide.Pointer;
-import tourguide.tourguide.Sequence;
-import tourguide.tourguide.ToolTip;
-import tourguide.tourguide.TourGuide;
+
 
 
 public class nameFragment extends Fragment {
-    static boolean firstRun=true;
+
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -74,8 +78,9 @@ public class nameFragment extends Fragment {
     RadioButton radioCurrent,radioCustom;
     TimePicker timePicker;
     TextClock textClock;
-
-    TourGuide mTourGuideHandler;
+    View hamburger;
+Toolbar toolbar;
+    public ChainTourGuide mTourGuideHandler;
 
 
     public nameFragment() {
@@ -139,7 +144,9 @@ public class nameFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_name,container,false);
 
-
+        toolbar=(Toolbar)getActivity().findViewById(R.id.mainToolbar);
+        hamburger= toolbar.getChildAt(1);
+        Log.v("hamburger","hjh"+toolbar.getChildAt(0).toString());
         toolbarText=(TextView)getActivity().findViewById(R.id.toolbarText);
         toolbarText.setText("Search by Faculty name");
         testButton=(Button)view.findViewById(R.id.buttonNameSearch);
@@ -158,8 +165,8 @@ public class nameFragment extends Fragment {
         final Spinner spinner = (Spinner) view.findViewById(R.id.nameDaySpinner);
 
         // Spinner click listener
-
-
+if(MainActivity.firstRun)
+tour1();
 
 
         nameInput.setDropDownBackgroundDrawable(new ColorDrawable(getContext().getResources().getColor(R.color.autoComplete)));
@@ -392,6 +399,53 @@ public class nameFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
+    void tour1()
+    {
+        Log.v("first run","in tour1 "+MainActivity.firstRun);
+        MainActivity.firstRun=false;
+
+        View v= new MainActivity().getNavButtonView(toolbar);
+        Log.v("hamburger","dra123"+v.toString());
+        ChainTourGuide tourGuide1 = ChainTourGuide.init(getActivity())
+                .setToolTip(new ToolTip()
+                        .setTitle("Input Tutorial")
+                        .setDescription("Enter faculty name you want to search or the respective queries in respective options\nin the menu")
+                        .setGravity(Gravity.BOTTOM)
+                )
+                // note that there is no Overlay here, so the default one will be used
+                .playLater(nameInput);
+
+        ChainTourGuide tourGuide2 = ChainTourGuide.init(getActivity())
+                .setToolTip(new ToolTip()
+                        .setTitle("Menu Tutorial")
+                        .setDescription("Press the button to get other options")
+                        .setGravity(Gravity.BOTTOM | Gravity.LEFT)
+                        .setBackgroundColor(Color.parseColor("#c0392b"))
+                )
+                .setOverlay(new Overlay()
+                        .setBackgroundColor(Color.parseColor("#EE2c3e50"))
+                    //    .setEnterAnimation(mEnterAnimation)
+                     //   .setExitAnimation(mExitAnimation)
+                ).with(TourGuide.Technique.HORIZONTAL_LEFT)
+                .playLater(v);
+
+
+        Sequence sequence = new Sequence.SequenceBuilder()
+                .add(tourGuide1, tourGuide2)
+                .setDefaultOverlay(new Overlay()
+                     //   .setEnterAnimation(mEnterAnimation)
+                     //   .setExitAnimation(mExitAnimation)
+                )
+                .setDefaultPointer(null)
+                .setContinueMethod(Sequence.ContinueMethod.OVERLAY)
+                .build();
+
+
+        ChainTourGuide.init(getActivity()).playInSequence(sequence);
+    }
+
 
 
 }

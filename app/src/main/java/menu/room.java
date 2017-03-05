@@ -3,6 +3,7 @@ package menu;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
@@ -10,9 +11,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -27,8 +31,12 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.sharathbhargav.timetable.ChainTourGuide;
 import com.example.sharathbhargav.timetable.DatabaseHelper;
+import com.example.sharathbhargav.timetable.Overlay;
 import com.example.sharathbhargav.timetable.R;
+import com.example.sharathbhargav.timetable.Sequence;
+import com.example.sharathbhargav.timetable.ToolTip;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -54,6 +62,11 @@ TextView toolbarText;
     ArrayAdapter<String> Room_no;
     AutoCompleteTextView roomSearch1;
     ArrayList<String> roomdisplay;
+
+
+
+
+
 
     private String mParam1;
     private String mParam2;
@@ -393,4 +406,9 @@ toolbarText=(TextView)getActivity().findViewById(R.id.toolbarText);
         ArrayList<String> RoomNo1=new ArrayList<String>(new HashSet<String>(RoomNo));
         Room_no=new ArrayAdapter<String>(getContext(),android.R.layout.simple_expandable_list_item_1,RoomNo1);
     }
+
+
+
+
+
 }

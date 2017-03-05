@@ -1,16 +1,26 @@
 package com.example.sharathbhargav.timetable;
+import android.*;
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -38,18 +48,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import layout.nameFragment;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link changeDb.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link changeDb#newInstance} factory method to
- * create an instance of this fragment.
- */
+
+
 public class changeDb extends Fragment implements nameFragment.OnFragmentInteractionListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -59,11 +64,12 @@ public class changeDb extends Fragment implements nameFragment.OnFragmentInterac
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
-
+    static Boolean pendingWRITE_EXTERNAL_STORAGEpermission=false;
+    int WRITE_EXTERNAL_STORAGE=1;
     Button setDb,updateDb;
     ArrayList<String> link_list=new ArrayList<String>();
-    ArrayList<String> fileDirExistingList=new ArrayList<String>();
+    ArrayList<String> fileDirExistingList=new ArrayList<String>();//path list
+    ArrayList<String> fireBaseFileNameList=new ArrayList<String>();
     ArrayList<String> name_list=new ArrayList<String>();
     private OnFragmentInteractionListener mListener;
     private DatabaseReference mFirebaseDatabase;
@@ -82,15 +88,6 @@ public class changeDb extends Fragment implements nameFragment.OnFragmentInterac
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment changeDb.
-     */
-    // TODO: Rename and change types and number of parameters
     public static changeDb newInstance(String param1, String param2) {
         changeDb fragment = new changeDb();
         Bundle args = new Bundle();
@@ -112,11 +109,8 @@ public class changeDb extends Fragment implements nameFragment.OnFragmentInterac
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view=inflater.inflate(R.layout.fragment_change_db, container, false);
-
-
-
         databasesDir = new File("/data/data/" + getContext().getPackageName(),"DBFILES");
         updateDb=(Button)view.findViewById(R.id.update_button);
         progress=new ProgressDialog(getContext());
@@ -125,10 +119,8 @@ public class changeDb extends Fragment implements nameFragment.OnFragmentInterac
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(layoutManager);
-
         toolbarText=(TextView)getActivity().findViewById(R.id.toolbarText);
         toolbarText.setText("Change Time Table");
-
         fileDirExistingList.clear();
         existingFilesList();
         SampleAdapter adapter=new SampleAdapter();
@@ -149,90 +141,30 @@ public class changeDb extends Fragment implements nameFragment.OnFragmentInterac
             }
         });
         updateDb.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                progress.setTitle("Updating");
-                progress.show();
-                fileDirExistingList.clear();
-                existingFilesList();
-                link_list.clear();
-                pathList.clear();
-                name_list.clear();
-                mFirebaseInstance = FirebaseDatabase.getInstance();
-                mFirebaseDatabase = mFirebaseInstance.getReference();
-                storage = FirebaseStorage.getInstance();
-                 mediaStorageDir = new File(
-                        Environment
-                                .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),"Databases");
-                if (!mediaStorageDir.exists()) {
-                    if (!mediaStorageDir.mkdirs()) {
-                        Log.d("Tag1", "Oops! Failed create Testing  directory");
-                    }
+                if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M)
+              checkpermission();
+                if (pendingWRITE_EXTERNAL_STORAGEpermission)
+                {
+                    if(isInternetAvailable())
+                    update();
+                    else
+                        Toast.makeText(getContext(),"Network Error"+"\nPlease Check Internet Connectivity!!!",Toast.LENGTH_SHORT).show();
                 }
-
-                mFirebaseDatabase.child("DBFILES").addListenerForSingleValueEvent(new ValueEventListener() {
-
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
-                            String name = noteDataSnapshot.getKey();
-                            String link = noteDataSnapshot.getValue(String.class);
-                            int i=0;
-                            for(i=0;i<fileDirExistingList.size();i++) {
-                                if (fileDirExistingList.get(i).equals(name)) {
-                                    break;
-                                }
-                            }
-                                if(i==fileDirExistingList.size()) {
-                                    link_list.add(link);
-                                    name_list.add(name);
-                                }
-
-                        }
-                        count=0;
-                        //name_list.removeAll(fileDirExistingList);
-                        Log.v("Firebase"," size"+link_list.size());
-                        for(int i=0;i<link_list.size();i++) {
-                            temp = storage.getReferenceFromUrl(link_list.get(i));
-                            File localFile=new File(mediaStorageDir.getPath() + File.separator+name_list.get(i));
-                            temp.getFile(localFile).addOnSuccessListener(new OnSuccessListener() {
-                                @Override
-                                public void onSuccess(Object o) {
-                                    count++;
-                                        if(count==link_list.size())
-                                    {
-                                        checkAndCopyDatabase();
-                                        progress.dismiss();
-                                        FragmentTransaction ft = getFragmentManager().beginTransaction();
-                                        ft.detach(changeDb.this).attach(changeDb.this).commit();
-                                        
-                                    }
-                                }
-
-
-                            });
-                            pathList.add(localFile.getPath());
-                        }
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                    //Log.v("Firebase","After downloading size= "+pathList.size());
-                });
-
-            }
+        }
         });
+
 
         return view;
     }
+
 
     private void checkAndCopyDatabase() {
         for(int i=0;i<pathList.size();i++)
         {
             String DB_NAME = name_list.get(i);
-
             String DB_PATH = databasesDir.getPath()+File.separator;
             String myPath = DB_PATH + DB_NAME;
             FileInputStream myInput = null;
@@ -279,11 +211,177 @@ public class changeDb extends Fragment implements nameFragment.OnFragmentInterac
 
         }
         Log.v("Delete","Directory delete");
+        //Delete files in internal memory after copying files to package folder
         File[] filesInDirDownloaded =mediaStorageDir.listFiles();
         for(int j=0;j<filesInDirDownloaded.length;j++)
             filesInDirDownloaded[j].delete();
         mediaStorageDir.delete();
         Log.v("Delete","After delete");
+
+    }
+    public void checkpermission()
+    {
+        int result=0;
+        result = ContextCompat.checkSelfPermission(getContext(),android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (result != PackageManager.PERMISSION_GRANTED) {
+
+           requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},WRITE_EXTERNAL_STORAGE);
+
+
+        }
+        else {
+            pendingWRITE_EXTERNAL_STORAGEpermission=true;
+        }
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        Log.v("permission","Inside grnt permission result");
+        if(grantResults[0]==PackageManager.PERMISSION_GRANTED)
+        {
+            pendingWRITE_EXTERNAL_STORAGEpermission=true;
+            Log.v("permission","Inside  permission granted");
+            if(isInternetAvailable())
+                update();
+            else
+                Toast.makeText(getContext(),"Network Error"+"\nPlease Check Internet Connectivity!!!",Toast.LENGTH_SHORT).show();
+        }
+       else if(!pendingWRITE_EXTERNAL_STORAGEpermission)
+        {
+            Log.v("permission","Inside not grnt permission");
+            new AlertDialog.Builder(getContext())
+                    .setTitle("Permission required")
+                    .setMessage("Grant the permission to continue the process")
+                    .setCancelable(true)
+                    .setPositiveButton("Grant",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            checkpermission();
+                        }
+                    })
+                    .setNegativeButton("Later",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            nameFragment fragment = new nameFragment();
+                            FragmentManager fragmentManager = getFragmentManager();
+                            fragmentManager.beginTransaction()
+                                    .replace(R.id.container, fragment)
+                                    .commit();
+                        }
+                    })
+                    .show();
+
+        }
+    }
+    void update()
+    {
+        progress.setTitle("Updating");
+        progress.show();
+        fileDirExistingList.clear();
+        existingFilesList();
+        link_list.clear();
+        pathList.clear();
+        name_list.clear();
+        mFirebaseInstance = FirebaseDatabase.getInstance();
+        mFirebaseDatabase = mFirebaseInstance.getReference();
+        storage = FirebaseStorage.getInstance();
+        mediaStorageDir = new File(
+                Environment
+                        .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Databases");
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+                Log.d("Tag1", "Oops! Failed create Testing  directory");
+            }
+        }
+
+        mFirebaseDatabase.child("DBFILES").addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
+                    String name = noteDataSnapshot.getKey();
+                    String link = noteDataSnapshot.getValue(String.class);
+                    fireBaseFileNameList.add(name);
+                    int i = 0;
+                    //Code block to filter files alerady downloaded if not add to download list(link list)
+                    for (i = 0; i < fileDirExistingList.size(); i++) {
+                        if (fileDirExistingList.get(i).equals(name)) {
+                            break;
+                        }
+                    }
+                    if (i == fileDirExistingList.size()) {
+                        link_list.add(link);
+                        name_list.add(name);
+                    }
+
+                }
+                //End
+                //Deleting files not in firebase but in internal directory
+                ArrayList<String> fileDirExistingList_temp = new ArrayList<String>();
+                fileDirExistingList_temp = fileDirExistingList;
+                fileDirExistingList_temp.removeAll(fireBaseFileNameList);
+                Log.v("Delete", "" + fileDirExistingList_temp.size());
+                if (fileDirExistingList_temp.size() > 0) {
+                    for (int i = 0; i < fileDirExistingList_temp.size(); i++) {
+                        Log.v("Delete", "" + new File(databasesDir.getPath() + File.separator + fileDirExistingList_temp.get(i)).getName() + "\n");
+                        new File(databasesDir.getPath() + File.separator + fileDirExistingList_temp.get(i)).delete();
+                    }
+                }
+                //End
+                //refreshing to display list
+                existingFilesList();
+                count = 0;
+                Log.v("Firebase", " size" + link_list.size());
+                if (link_list.size() > 0) {
+                    for (int i = 0; i < link_list.size(); i++) {
+                        temp = storage.getReferenceFromUrl(link_list.get(i));
+                        File localFile = new File(mediaStorageDir.getPath() + File.separator + name_list.get(i));
+                        temp.getFile(localFile).addOnSuccessListener(new OnSuccessListener() {
+                                    @Override
+                                    public void onSuccess(Object o) {
+                                        count++;
+                                        if (count == link_list.size()) {
+                                            checkAndCopyDatabase();
+                                            progress.dismiss();
+                                            FragmentTransaction ft = getFragmentManager().beginTransaction();
+                                            ft.detach(changeDb.this).attach(changeDb.this).commit();
+
+                                        }
+                                    }
+
+
+                                });
+                        //add downloaded files path
+                        pathList.add(localFile.getPath());
+                    }
+                } else {
+                    progress.dismiss();
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.detach(changeDb.this).attach(changeDb.this).commit();
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+
+        });
+
+    }
+    public boolean isInternetAvailable() {
+        try {
+            InetAddress ipAddr = InetAddress.getByName("https://www.google.co.in/?gws_rd=ssl");
+            Toast.makeText(getContext(),"ip"+ipAddr,Toast.LENGTH_SHORT).show();
+            //You can replace it with your name
+            return !ipAddr.equals("");
+
+        } catch (Exception e) {
+            return true;
+        }
 
     }
     void existingFilesList()
@@ -292,6 +390,7 @@ public class changeDb extends Fragment implements nameFragment.OnFragmentInterac
         for(int i=0;i<filesInDir.length;i++)
         {
             fileDirExistingList.add(filesInDir[i].getName());
+
         }
     }
     public class SampleAdapter extends RecyclerView.Adapter<SampleAdapter.ViewHolder> {
@@ -327,6 +426,7 @@ public class changeDb extends Fragment implements nameFragment.OnFragmentInterac
                 super(itemView);
                  radioButton=(RadioButton)itemView.findViewById(R.id.radioButton);
                 changeDbText=(TextView)itemView.findViewById(R.id.changeDbText);
+                //Added to handle radio button check
                 radioButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -368,18 +468,7 @@ public class changeDb extends Fragment implements nameFragment.OnFragmentInterac
 
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 
