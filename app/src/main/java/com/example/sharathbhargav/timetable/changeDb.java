@@ -144,15 +144,17 @@ public class changeDb extends Fragment implements nameFragment.OnFragmentInterac
 
             @Override
             public void onClick(View v) {
-                if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M)
-              checkpermission();
-                if (pendingWRITE_EXTERNAL_STORAGEpermission)
-                {
-                    if(isInternetAvailable())
-                    update();
-                    else
-                        Toast.makeText(getContext(),"Network Error"+"\nPlease Check Internet Connectivity!!!",Toast.LENGTH_SHORT).show();
+                if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M) {
+                    checkpermission();
+                    if (pendingWRITE_EXTERNAL_STORAGEpermission) {
+                        if (isInternetAvailable())
+                            update();
+                        else
+                            Toast.makeText(getContext(), "Network Error" + "\nPlease Check Internet Connectivity!!!", Toast.LENGTH_SHORT).show();
+                    }
                 }
+                else
+                    update();
         }
         });
 

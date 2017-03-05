@@ -27,7 +27,7 @@
             android:actionViewClass="android.widget.ImageButton"/>
     <item
         android:id="@+id/temp"
-        android:title="temp"/>
+        android:title="About Developers"/>
 
 
 </menu>
