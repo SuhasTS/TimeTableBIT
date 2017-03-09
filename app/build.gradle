@@ -13,7 +13,7 @@ android {
     }
     buildTypes {
         release {
-            //    minifyEnabled true
+               minifyEnabled true
             //    shrinkResources false
 
             proguardFiles getDefaultProguardFile('proguard-android.txt')
@@ -39,6 +39,16 @@ dependencies {
     compile 'com.google.firebase:firebase-database:10.0.1'
     compile 'com.android.support:cardview-v7:23.4.0'
     compile 'com.mutualmobile.android:cardstack:0.5.2'
+    compile 'com.google.firebase:firebase-messaging:10.0.1'
     testCompile 'junit:junit:4.12'
+
+
+  //  compile 'com.infstory:proguard-snippets:1.0.0'
+
+
+  //  compile 'com.github.yongjhih.android-proguards:sqlite-pro:-SNAPSHOT'
+  //  compile 'com.github.yongjhih.android-proguards:support-design-pro:-SNAPSHOT'
+  //  compile 'com.github.yongjhih.android-proguards:support-v7-appcompat-pro:-SNAPSHOT'
+  //  compile 'com.github.yongjhih.android-proguards:support-v7-cardview-pro:-SNAPSHOT'
 }
 apply plugin: 'com.google.gms.google-services'

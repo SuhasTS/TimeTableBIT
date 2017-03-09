@@ -199,7 +199,13 @@ public class MainActivity extends AppCompatActivity implements  nameFragment.OnF
         drawerLayout.closeDrawers();
     }
 
+     void nameFragment()
+    {
+        fragmentTransaction=getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.container,new nameFragment());
+        fragmentTransaction.commit();
 
+    }
     void facultyFragment(MenuItem item)
     {
         fragmentTransaction=getSupportFragmentManager().beginTransaction();
@@ -292,7 +298,7 @@ public class MainActivity extends AppCompatActivity implements  nameFragment.OnF
             super.onBackPressed();
         }
     }
-
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
@@ -304,5 +310,5 @@ public class MainActivity extends AppCompatActivity implements  nameFragment.OnF
 
         return true;
     }
-
+*/
 }

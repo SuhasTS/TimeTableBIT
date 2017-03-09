@@ -154,32 +154,37 @@ public class dayFaculty extends Fragment implements DisplayEntireWeek.OnFragment
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String day=customDay[0].substring(0,3);
-                day=day.toUpperCase();
-              String lName =nameInput.getText().toString();
-                nameInput.setText("");
-                if(lName.length()>4)
-                    res=myDbHelper.getDayFaculty(lName,day);
-                else
-                    res=myDbHelper.getDayFacultyInitials(lName,day);
-                displayArrayList  =new ArrayList<display>();
-                while (res.moveToNext()) {
-                 //   String temp = "" + res.getString(0) + res.getInt(1) + res.getString(2) + res.getString(3);
-                   // Log.v("Hello", temp);
-                    displayArrayList.add(new display(res.getString(0), res.getString(1), res.getString(2), res.getString(3)));
+                String day = customDay[0].substring(0, 3);
+                day = day.toUpperCase();
+                String lName = nameInput.getText().toString();
+                if (lName.length()==0)
+                    Toast.makeText(getContext(), "Please Enter a Faculty name", Toast.LENGTH_SHORT).show();
+                else {
+                    nameInput.setText("");
+                    if (lName.length() > 4)
+                        res = myDbHelper.getDayFaculty(lName, day);
+                    else
+                        res = myDbHelper.getDayFacultyInitials(lName, day);
+                    displayArrayList = new ArrayList<display>();
+                    while (res.moveToNext()) {
+                        //   String temp = "" + res.getString(0) + res.getInt(1) + res.getString(2) + res.getString(3);
+                        // Log.v("Hello", temp);
+                        displayArrayList.add(new display(res.getString(0), res.getString(1), res.getString(2), res.getString(3)));
+                    }
+
+                    ArrayList<String> head_parameters = new ArrayList<String>();
+                    head_parameters.add("Slot");
+                    head_parameters.add("Room");
+                    head_parameters.add("Sem");
+                    head_parameters.add("Subject");
+                    View view = getActivity().getLayoutInflater().inflate(R.layout.list_view_gen, null);
+                    DisplayMetrics metrics = new DisplayMetrics();
+                    ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(metrics);
+                    display_dialog_general popup = new display_dialog_general(displayArrayList, view, head_parameters, getContext(), lName, metrics);
+                    popup.showDialog();
+                    //displayArrayList.clear();
+                    //Toast.makeText(getContext(),res.getCount(),Toast.LENGTH_LONG).show();
                 }
-                ArrayList<String> head_parameters=new ArrayList<String>();
-                head_parameters.add("Slot");
-                head_parameters.add("Room");
-                head_parameters.add("Sem");
-                head_parameters.add("Subject");
-                View view = getActivity().getLayoutInflater().inflate(R.layout.list_view_gen, null);
-                DisplayMetrics metrics = new DisplayMetrics();
-                ((Activity)getContext()).getWindowManager().getDefaultDisplay().getMetrics(metrics);
-                display_dialog_general popup=new display_dialog_general(displayArrayList,view,head_parameters,getContext(),lName,metrics);
-                popup.showDialog();
-                //displayArrayList.clear();
-                //Toast.makeText(getContext(),res.getCount(),Toast.LENGTH_LONG).show();
             }
         });
 
@@ -201,6 +206,8 @@ public class dayFaculty extends Fragment implements DisplayEntireWeek.OnFragment
                             toolbarText.setText("Entire Week Display");
                             MainActivity.toolbarTitle="Day schedule : Faculty";
                         }
+                        else
+                            Toast.makeText(getContext(), "Please Enter a Faculty name", Toast.LENGTH_SHORT).show();
                     }
                 });
 

@@ -271,56 +271,56 @@ toolbarText=(TextView)getActivity().findViewById(R.id.toolbarText);
                 day=day.toUpperCase();
                 lName=roomSearch.getText().toString();
                 if(lName.length()==0)
-                Log.v("Lname",lName+"sdfds");
-                roomSearch.setText("");
-
-                res = myDbHelper1.getdataRoom(lName,day,slotTime[i]);
-                if(res.getCount()==0)
+                    Toast.makeText(getContext(),"Please enter a room number",Toast.LENGTH_SHORT).show();
+                else
                 {
-                    if(slotTime[i]<4)
-                        res=myDbHelper1.getdataRoom(lName,day,12);
-                    else if(slotTime[i]<8)
-                        res=myDbHelper1.getdataRoom(lName,day,13);
-                    else
-                        res=myDbHelper1.getdataRoom(lName,day,14);
+                    roomSearch.setText("");
 
+                    res = myDbHelper1.getdataRoom(lName, day, slotTime[i]);
+                    if (res.getCount() == 0) {
+                        if (slotTime[i] < 4)
+                            res = myDbHelper1.getdataRoom(lName, day, 12);
+                        else if (slotTime[i] < 8)
+                            res = myDbHelper1.getdataRoom(lName, day, 13);
+                        else
+                            res = myDbHelper1.getdataRoom(lName, day, 14);
+
+                    }
+                    Log.v("Method", "Room method" + res.getCount() + "    " + lName);
+                    //while(res.moveToNext()) {
+                    //    roomDisplayFaculty.setText("Name: "+res.getString(0));
+                    //    roomDisplaySem.setText("Class: "+res.getString(1));
+                    //    roomDisplaySub.setText("Subject: "+res.getString(2));
+                    //}
+
+                    roomdisplay = new ArrayList<String>();
+                    while (res.moveToNext()) {
+                        //result="Class: "+res.getString(1)+"\n"+"Subject: "+res.getString(2)+"Name: "+res.getString(0)+"\n";
+                        //Log.v("Room result",""+res.getString(0));
+                        roomdisplay.add(res.getString(0));
+                        roomdisplay.add(res.getString(1));
+                        roomdisplay.add(res.getString(2));
+
+
+                    }
+                    String result = "Faculty :";
+                    for (int j = 0; j < roomdisplay.size(); j = j + 3) {
+                        result += roomdisplay.get(j) + "\n\t\t\t\t\t\t";
+                        Log.v("roomdisplay", roomdisplay.get(j) + " " + j);
+                    }
+                    result = result.substring(0, result.length() - 7);
+                    String result1 = null;
+                    if (res.getCount() >= 1)
+                        result1 = result + "\n" + "Sem: " + roomdisplay.get(1) + "\n" + "Subject: " + roomdisplay.get(2);
+                    android.app.AlertDialog.Builder alert = new android.app.AlertDialog.Builder(getContext());
+                    alert.setTitle("Search Result");
+                    alert.setPositiveButton("OK", null);
+                    if (result1 == null || time > 1645 || time < 800)
+                        result1 = "No classes";
+
+                    alert.setMessage(result1);
+                    alert.show();
                 }
-                Log.v("Method","Room method"+res.getCount()+"    "+lName);
-                //while(res.moveToNext()) {
-                //    roomDisplayFaculty.setText("Name: "+res.getString(0));
-                //    roomDisplaySem.setText("Class: "+res.getString(1));
-                //    roomDisplaySub.setText("Subject: "+res.getString(2));
-                //}
-
-                roomdisplay=new ArrayList<String>();
-                while(res.moveToNext()) {
-                    //result="Class: "+res.getString(1)+"\n"+"Subject: "+res.getString(2)+"Name: "+res.getString(0)+"\n";
-                    //Log.v("Room result",""+res.getString(0));
-                    roomdisplay.add(res.getString(0));
-                    roomdisplay.add(res.getString(1));
-                    roomdisplay.add(res.getString(2));
-
-
-                }
-                String result = "Faculty :";
-                for(int j=0;j<roomdisplay.size();j=j+3)
-                {
-                    result+=roomdisplay.get(j)+"\n\t\t\t\t\t\t";
-                    Log.v("roomdisplay",roomdisplay.get(j)+" "+j);
-                }
-                result=result.substring(0,result.length()-7);
-                String result1 = null;
-                if(res.getCount()>=1)
-                    result1=result+"\n"+"Sem: "+roomdisplay.get(1)+"\n"+"Subject: "+roomdisplay.get(2);
-                android.app.AlertDialog.Builder alert = new android.app.AlertDialog.Builder(getContext());
-                alert.setTitle("Search Result");
-                alert.setPositiveButton("OK", null);
-                if(result1==null || time>1645 || time<800 )
-                    result1="No classes";
-                if(lName.length()==0)
-                    result1="Please enter a room number";
-                alert.setMessage(result1);
-                alert.show();
 
             }
         });

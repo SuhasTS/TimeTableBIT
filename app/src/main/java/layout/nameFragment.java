@@ -306,57 +306,58 @@ tour1();
                 Log.v("time outside whileafter",""+i);
                 day=day.toUpperCase();
                 lName=nameInput.getText().toString();
-                nameInput.setText("");
-                if(lName.length()>4)
-                res = myDbHelper.getdataName(lName,day,slotTime[i]);
-                else
-                res=myDbHelper.getDataNameInitials(lName,day,slotTime[i]);
-                if(res.getCount()==0)
-                {   Log.v("Name slot lab",""+slotTime[i]);
-                    if(slotTime[i]<4) {
-                        res = myDbHelper.getdataName(lName, day, 12);
-                    Log.v("In lab 1",""+res.getCount());
-                    }
-                        else if(slotTime[i]<8) {
-                        res = myDbHelper.getdataName(lName, day, 13);
-                        Log.v("In lab 2",""+res.getCount());
-                    }
-                    else
-                        res=myDbHelper.getdataName(lName,day,14);
-
-                }
-
-                String result = null;
-                //while(res.moveToNext()) {
-                //    nameRoomDisplay.setText("Room No: "+res.getString(0));
-                //    nameSemDisplay.setText("Class: "+res.getString(1));
-                //    nameSubDisplay.setText("Subject: "+res.getString(2));
-                //}
-                //if(slotTime[i]==4 || slotTime[i]==8)
-                //{
-                //    nameSemDisplay.setText("Break");
-                //}
-                android.app.AlertDialog.Builder alert = new android.app.AlertDialog.Builder(getContext());
-                alert.setTitle("Search Result");
-                alert.setPositiveButton("OK", null);
-                while(res.moveToNext()) {
-                    if(res.getString(0).length()<=3)
-                    result= "Room No: "+res.getString(0)+"\n"+"Subject: "+res.getString(1)+"\n"+"Sem: "+res.getString(2);
-                    else
-                        result= "Room No: "+res.getString(0).substring(0,res.getString(0).length()-1)+"\n"+"Class: "+res.getString(1)+"\n"+"Subject: "+res.getString(2);
-                }
-                if(slotTime[i]==4 || slotTime[i]==8)
-                {
-                    result="Break";
-                }
-                Log.v("Create","hello");
-                if(result==null  || time>1645 || time<800)
-                    result="No classes";
                 if(lName.length()==0)
-                    result="Please enter the Faculty name";
-                alert.setMessage(result);
-                Log.v("Create","message set");
-                alert.show();
+                    Toast.makeText(getContext(),"Please Enter the faculty name",Toast.LENGTH_SHORT).show();
+                else
+                {
+                    nameInput.setText("");
+                    if (lName.length() > 4)
+                        res = myDbHelper.getdataName(lName, day, slotTime[i]);
+                    else
+                        res = myDbHelper.getDataNameInitials(lName, day, slotTime[i]);
+                    if (res.getCount() == 0) {
+                        Log.v("Name slot lab", "" + slotTime[i]);
+                        if (slotTime[i] < 4) {
+                            res = myDbHelper.getdataName(lName, day, 12);
+                            Log.v("In lab 1", "" + res.getCount());
+                        } else if (slotTime[i] < 8) {
+                            res = myDbHelper.getdataName(lName, day, 13);
+                            Log.v("In lab 2", "" + res.getCount());
+                        } else
+                            res = myDbHelper.getdataName(lName, day, 14);
+
+                    }
+
+                    String result = null;
+                    //while(res.moveToNext()) {
+                    //    nameRoomDisplay.setText("Room No: "+res.getString(0));
+                    //    nameSemDisplay.setText("Class: "+res.getString(1));
+                    //    nameSubDisplay.setText("Subject: "+res.getString(2));
+                    //}
+                    //if(slotTime[i]==4 || slotTime[i]==8)
+                    //{
+                    //    nameSemDisplay.setText("Break");
+                    //}
+                    android.app.AlertDialog.Builder alert = new android.app.AlertDialog.Builder(getContext());
+                    alert.setTitle("Search Result");
+                    alert.setPositiveButton("OK", null);
+                    while (res.moveToNext()) {
+                        if (res.getString(0).length() <= 3)
+                            result = "Room No: " + res.getString(0) + "\n" + "Subject: " + res.getString(1) + "\n" + "Sem: " + res.getString(2);
+                        else
+                            result = "Room No: " + res.getString(0).substring(0, res.getString(0).length() - 1) + "\n" + "Class: " + res.getString(1) + "\n" + "Subject: " + res.getString(2);
+                    }
+                    if (slotTime[i] == 4 || slotTime[i] == 8) {
+                        result = "Break";
+                    }
+                    Log.v("Create", "hello");
+                    if (result == null || time > 1645 || time < 800)
+                        result = "No classes";
+
+                    alert.setMessage(result);
+                    Log.v("Create", "message set");
+                    alert.show();
+                }
             }
         });
 

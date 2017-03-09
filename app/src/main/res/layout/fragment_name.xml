@@ -30,6 +30,7 @@
             android:paddingRight="30dp"
             android:paddingBottom="15dp"
             android:layout_marginTop="40dp"
+            android:focusable="true"
             android:textCursorDrawable="@color/Black"
             android:textColor="@color/Black"
             android:textAlignment="center"
@@ -38,18 +39,40 @@
     </android.support.design.widget.TextInputLayout>
 
 
-    <TextClock
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textClockName"
-        android:format12Hour="E\nhh:mm:ss a"
+        android:text="Search"
+        android:id="@+id/buttonNameSearch"
         android:textStyle="normal"
-        android:textSize="40sp"
-        android:textColor="@color/colorAccent"
-        android:layout_alignTop="@+id/timePicker3"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="41dp" />
+        android:textSize="25sp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:paddingRight="25dp"
+        android:paddingLeft="25dp"
+        android:elevation="4dp"
+        android:background="@color/search_button_color"
+        android:layout_marginTop="13dp"
+      android:layout_below="@id/nameSearchWrapper"
 
+        android:layout_centerHorizontal="true" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/buttonNameSearch">
+        <TextClock
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textClockName"
+            android:format12Hour="E\nhh:mm:ss a"
+            android:textStyle="normal"
+            android:textSize="40sp"
+            android:textColor="@color/colorAccent"
+            android:layout_alignTop="@+id/timePicker3"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="41dp" />
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -100,22 +123,5 @@
                 android:id="@+id/nameRadioCustom" />
     </RadioGroup>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Search"
-        android:id="@+id/buttonNameSearch"
-        android:textStyle="normal"
-        android:textSize="25sp"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
-        android:paddingRight="25dp"
-        android:paddingLeft="25dp"
-        android:elevation="4dp"
-        android:background="@color/search_button_color"
-        android:layout_marginTop="13dp"
-        android:layout_below="@+id/nameSearchWrapper"
-        android:layout_centerHorizontal="true" />
-
-
+    </RelativeLayout>
 </RelativeLayout>

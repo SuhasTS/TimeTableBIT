@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -51,10 +52,6 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import layout.nameFragment;
-
-
-
-
 public class changeDb extends Fragment implements nameFragment.OnFragmentInteractionListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -133,11 +130,11 @@ public class changeDb extends Fragment implements nameFragment.OnFragmentInterac
         setDb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               nameFragment fragment = new nameFragment();
+                nameFragment fragment = new nameFragment();
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction()
-                      .replace(R.id.container, fragment)
-                      .commit();
+                        .replace(R.id.container, fragment)
+                        .commit();
             }
         });
         updateDb.setOnClickListener(new View.OnClickListener() {
@@ -147,15 +144,16 @@ public class changeDb extends Fragment implements nameFragment.OnFragmentInterac
                 if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M) {
                     checkpermission();
                     if (pendingWRITE_EXTERNAL_STORAGEpermission) {
-                        if (isInternetAvailable())
+                        if (isInternetAvailable(getContext()))
                             update();
                         else
                             Toast.makeText(getContext(), "Network Error" + "\nPlease Check Internet Connectivity!!!", Toast.LENGTH_SHORT).show();
                     }
                 }
-                else
+                else {
                     update();
-        }
+                }
+            }
         });
 
 
@@ -170,46 +168,46 @@ public class changeDb extends Fragment implements nameFragment.OnFragmentInterac
             String DB_PATH = databasesDir.getPath()+File.separator;
             String myPath = DB_PATH + DB_NAME;
             FileInputStream myInput = null;
-                try {
-                    myInput = new FileInputStream(pathList.get(i));
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                String outFileName = DB_PATH + DB_NAME;
-                FileOutputStream myOutput = null;
-                try {
-                    myOutput = new FileOutputStream(outFileName);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                byte[] buffer = new byte[10];
-                int length;
-                try {
-                    while ((length = myInput.read(buffer)) > 0) {
-                        try {
-                            myOutput.write(buffer, 0, length);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+            try {
+                myInput = new FileInputStream(pathList.get(i));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            String outFileName = DB_PATH + DB_NAME;
+            FileOutputStream myOutput = null;
+            try {
+                myOutput = new FileOutputStream(outFileName);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            byte[] buffer = new byte[10];
+            int length;
+            try {
+                while ((length = myInput.read(buffer)) > 0) {
+                    try {
+                        myOutput.write(buffer, 0, length);
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
-                try {
-                    myOutput.flush();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    myOutput.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    myInput.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                myOutput.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                myOutput.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                myInput.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
         }
         Log.v("Delete","Directory delete");
@@ -227,7 +225,7 @@ public class changeDb extends Fragment implements nameFragment.OnFragmentInterac
         result = ContextCompat.checkSelfPermission(getContext(),android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
         if (result != PackageManager.PERMISSION_GRANTED) {
 
-           requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},WRITE_EXTERNAL_STORAGE);
+            requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},WRITE_EXTERNAL_STORAGE);
 
 
         }
@@ -244,14 +242,14 @@ public class changeDb extends Fragment implements nameFragment.OnFragmentInterac
         Log.v("permission","Inside grnt permission result");
         if(grantResults[0]==PackageManager.PERMISSION_GRANTED)
         {
-            pendingWRITE_EXTERNAL_STORAGEpermission=true;
             Log.v("permission","Inside  permission granted");
-            if(isInternetAvailable())
+            pendingWRITE_EXTERNAL_STORAGEpermission=true;
+            if(isInternetAvailable(getContext()))
                 update();
             else
                 Toast.makeText(getContext(),"Network Error"+"\nPlease Check Internet Connectivity!!!",Toast.LENGTH_SHORT).show();
         }
-       else if(!pendingWRITE_EXTERNAL_STORAGEpermission)
+        else
         {
             Log.v("permission","Inside not grnt permission");
             new AlertDialog.Builder(getContext())
@@ -340,21 +338,19 @@ public class changeDb extends Fragment implements nameFragment.OnFragmentInterac
                     for (int i = 0; i < link_list.size(); i++) {
                         temp = storage.getReferenceFromUrl(link_list.get(i));
                         File localFile = new File(mediaStorageDir.getPath() + File.separator + name_list.get(i));
-                        temp.getFile(localFile).addOnSuccessListener(new OnSuccessListener() {
-                                    @Override
-                                    public void onSuccess(Object o) {
-                                        count++;
-                                        if (count == link_list.size()) {
-                                            checkAndCopyDatabase();
-                                            progress.dismiss();
-                                            FragmentTransaction ft = getFragmentManager().beginTransaction();
-                                            ft.detach(changeDb.this).attach(changeDb.this).commit();
+                        temp.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                                count++;
+                                if (count == link_list.size()) {
+                                    checkAndCopyDatabase();
+                                    progress.dismiss();
+                                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                                    ft.detach(changeDb.this).attach(changeDb.this).commit();
 
-                                        }
-                                    }
-
-
-                                });
+                                }
+                            }
+                        });
                         //add downloaded files path
                         pathList.add(localFile.getPath());
                     }
@@ -374,16 +370,9 @@ public class changeDb extends Fragment implements nameFragment.OnFragmentInterac
         });
 
     }
-    public boolean isInternetAvailable() {
-        try {
-            InetAddress ipAddr = InetAddress.getByName("https://www.google.co.in/?gws_rd=ssl");
-            Toast.makeText(getContext(),"ip"+ipAddr,Toast.LENGTH_SHORT).show();
-            //You can replace it with your name
-            return !ipAddr.equals("");
-
-        } catch (Exception e) {
-            return true;
-        }
+    public boolean isInternetAvailable(Context context) {
+        final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
+        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
 
     }
     void existingFilesList()
@@ -426,7 +415,7 @@ public class changeDb extends Fragment implements nameFragment.OnFragmentInterac
             TextView changeDbText;
             public ViewHolder(View itemView) {
                 super(itemView);
-                 radioButton=(RadioButton)itemView.findViewById(R.id.radioButton);
+                radioButton=(RadioButton)itemView.findViewById(R.id.radioButton);
                 changeDbText=(TextView)itemView.findViewById(R.id.changeDbText);
                 //Added to handle radio button check
                 radioButton.setOnClickListener(new View.OnClickListener() {
