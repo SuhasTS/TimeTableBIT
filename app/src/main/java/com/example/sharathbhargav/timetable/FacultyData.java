@@ -20,6 +20,11 @@ import android.widget.TextView;
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.bumptech.glide.Glide;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -38,6 +43,7 @@ public class FacultyData extends AppCompatActivity {
     RecyclerView recyclerFacultyInfo;
     facultyInfoAdapter adapter;
     StorageReference imagereference;
+    DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +55,9 @@ public class FacultyData extends AppCompatActivity {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerFacultyInfo.setLayoutManager(layoutManager);
         adapter=new facultyInfoAdapter();
-        imagereference= FirebaseStorage.getInstance().getReferenceFromUrl("gs://timetable-dbdd5.appspot.com/nanda.jpg");
+
+        databaseReference= FirebaseDatabase.getInstance().getReferenceFromUrl("https://bitcse-90b07.firebaseio.com/");
+    //  imagereference= FirebaseStorage.getInstance().getReferenceFromUrl("gs://timetable-dbdd5.appspot.com/nanda.jpg");
         myDbHelper  = new DatabaseHelper(getApplicationContext());
         try {
             myDbHelper.createDataBase();
@@ -61,13 +69,16 @@ public class FacultyData extends AppCompatActivity {
         } catch (SQLException sqle) {
             throw sqle;
         }
-        Cursor fname=myDbHelper.getnames();
+       final Cursor fname=myDbHelper.getnames();
         while(fname.moveToNext())
         {
-            FacultyCardGeneralInfo temp=new FacultyCardGeneralInfo();
-           temp.name=fname.getString(0);
+          final   FacultyCardGeneralInfo temp=new FacultyCardGeneralInfo();
+            temp.name=fname.getString(0);
             temp.tag=fname.getString(1);
-            facultyGeneralInfoList.add(temp);
+            temp.fid=fname.getString(2);
+            temp.load();
+           facultyGeneralInfoList.add(temp);
+
         }
         facultyNameListFiltered.addAll(facultyGeneralInfoList);
         recyclerFacultyInfo.setAdapter(adapter);
@@ -123,11 +134,13 @@ public class FacultyData extends AppCompatActivity {
         }
 
         @Override
-        public void onBindViewHolder(final myViewHolder holder, int position) {
+        public void onBindViewHolder(final myViewHolder holder, final int position) {
             holder.cardLecturerName.setText("Name: "+facultyNameListFiltered.get(position).name);
             holder.cardLecturerDesignation.setText("Designation: Professor & Head of Department");
             holder.cardLecturerQualification.setText("Qualification: M.Sc., M.Tech., M.S., Ph.D");
             holder.cardLecturerMailId.setText("Mail-Id: snandagopalan@gmail.com");
+            imagereference= FirebaseStorage.getInstance().getReferenceFromUrl("gs://bitcse-90b07.appspot.com/Faculty-Images/"+facultyNameListFiltered.get(position).fid+".jpg");
+
             Glide.with(getApplicationContext())
                     .using(new FirebaseImageLoader())
                     .load(imagereference)
@@ -139,7 +152,8 @@ public class FacultyData extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent i=new Intent(getApplicationContext(),googleSitesWebView.class);
-                    i.putExtra("site","www.google.com");
+                    int p=position;
+                    i.putExtra("site",facultyNameListFiltered.get(p).web_link);
                     startActivity(i);
                 }
             });

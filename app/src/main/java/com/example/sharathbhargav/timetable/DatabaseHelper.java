@@ -212,7 +212,7 @@ public DatabaseHelper()
     public Cursor getnames()
     {
         Log.v("getname1233","");
-        Cursor c =myDataBase.rawQuery("select NAME,TAG from faculty",null);
+        Cursor c =myDataBase.rawQuery("select NAME,TAG,fid from faculty",null);
         return c;
     }
 

@@ -1,30 +1,27 @@
 {
   "project_info": {
-    "project_number": "859023342004",
-    "firebase_url": "https://timetable-dbdd5.firebaseio.com",
-    "project_id": "timetable-dbdd5",
-    "storage_bucket": "timetable-dbdd5.appspot.com"
+    "project_number": "99037691542",
+    "firebase_url": "https://bitcse-90b07.firebaseio.com",
+    "project_id": "bitcse-90b07",
+    "storage_bucket": "bitcse-90b07.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:859023342004:android:90a5e57efedc59f7",
+        "mobilesdk_app_id": "1:99037691542:android:90a5e57efedc59f7",
         "android_client_info": {
           "package_name": "com.example.sharathbhargav.timetable"
         }
       },
       "oauth_client": [
         {
-          "client_id": "859023342004-fj0tca58dub0taepbqpkd85dtbqc6j71.apps.googleusercontent.com",
+          "client_id": "99037691542-gob7rdi9speg06j1f75sqpquu3j8jetd.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBSCtsP7EGYP9R6fAEuWKBvvfYQ6hGFXsE"
-        },
-        {
-          "current_key": "AIzaSyBnDN0kGIcMVDtoqKonVRiflD-l5y78ass"
+          "current_key": "AIzaSyASO3XBsbIstYnxl13qFIS1QUZRvyNWlz8"
         }
       ],
       "services": {
