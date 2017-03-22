@@ -80,6 +80,8 @@ public class nameFragment extends Fragment {
     TextClock textClock;
     View hamburger;
 Toolbar toolbar;
+
+    int totalSlots=0;
     public ChainTourGuide mTourGuideHandler;
 
 
@@ -110,8 +112,8 @@ Toolbar toolbar;
 
 
 
-        timeArray= new int[]{800, 850, 940, 1030, 1100, 1150, 1240, 1330, 1415, 1505, 1555};
-        slotTime=new int[]{1,2,3,4,5,6,7,8,9,10,11};
+
+
 
         try {
             myDbHelper.createDataBase();
@@ -123,7 +125,20 @@ Toolbar toolbar;
         } catch (SQLException sqle) {
             throw sqle;
         }
+        Cursor slots=myDbHelper.getSlot();
         int i=0;
+        timeArray=new int[slots.getCount()];
+        slotTime=new int[slots.getCount()];
+        while (slots.moveToNext())
+        {
+            timeArray[i]=Integer.parseInt(slots.getString(2));
+            slotTime[i]=Integer.parseInt(slots.getString(0));
+
+            Log.v("Extra","time "+timeArray[i]+"  slot="+slotTime[i]);
+            i++;
+        }
+        totalSlots=i-2;
+         i=0;
         fname1=myDbHelper.getnames();
         fnames=new String[fname1.getCount()*2];
         while(fname1.moveToNext())
@@ -293,16 +308,17 @@ tour1();
                 }
                 int time=Integer.parseInt(total.substring(3));
                 int i=0;
-                Log.v("Time new current",""+time);
-                while(!(time<timeArray[i]) && i<10 )
+                Log.v("Extra",""+time);
+                while(!(time<timeArray[i]) && i<totalSlots )
                 {
                     i++;
-                    Log.v("Name while",""+i);
+                    Log.v("Extra"," in while "+i);
                 }
 
 
                 if(i!=0)
-                    i--;
+                //    i--;
+                Log.v("Extra","final i="+i);
                 Log.v("time outside whileafter",""+i);
                 day=day.toUpperCase();
                 lName=nameInput.getText().toString();
@@ -318,13 +334,13 @@ tour1();
                     if (res.getCount() == 0) {
                         Log.v("Name slot lab", "" + slotTime[i]);
                         if (slotTime[i] < 4) {
-                            res = myDbHelper.getdataName(lName, day, 12);
+                            res = myDbHelper.getdataName(lName, day, 21);
                             Log.v("In lab 1", "" + res.getCount());
                         } else if (slotTime[i] < 8) {
-                            res = myDbHelper.getdataName(lName, day, 13);
+                            res = myDbHelper.getdataName(lName, day, 22);
                             Log.v("In lab 2", "" + res.getCount());
                         } else
-                            res = myDbHelper.getdataName(lName, day, 14);
+                            res = myDbHelper.getdataName(lName, day, 23);
 
                     }
 
@@ -347,9 +363,8 @@ tour1();
                         else
                             result = "Room No: " + res.getString(0).substring(0, res.getString(0).length() - 1) + "\n" + "Class: " + res.getString(1) + "\n" + "Subject: " + res.getString(2);
                     }
-                    if (slotTime[i] == 4 || slotTime[i] == 8) {
-                        result = "Break";
-                    }
+
+
                     Log.v("Create", "hello");
                     if (result == null || time > 1645 || time < 800)
                         result = "No classes";

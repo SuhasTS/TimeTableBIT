@@ -32,9 +32,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     String DB_PATH = null;
 
-    private static String DB_NAME = "2016o";
+    private static String DB_NAME = "2017e";
     private SQLiteDatabase myDataBase;
-    private final Context myContext;
+    private  Context myContext=null;
 
 
     public DatabaseHelper(Context context) {
@@ -50,7 +50,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         this.DB_PATH=databasesDir.getPath()+File.separator;
     }
 
-
+public DatabaseHelper()
+ {
+     super(null,DB_NAME,null,10);
+     File databasesDir = new File("/data/data/com.example.sharathbhargav.timetable", "DBFILES");
+     this.DB_PATH=databasesDir.getPath()+File.separator;
+ }
     public void createDataBase() throws IOException {
 
         boolean dbExist = checkDataBase();
@@ -269,4 +274,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     String getDbName(){return DB_NAME;}
 
 
+   public Cursor getSlot()
+    {
+        Cursor c=myDataBase.rawQuery("select * from slot",null);
+        return c;
+    }
 }

@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 public class FirstScreen extends AppCompatActivity {
-    Button facultyData,splashhToTT;
+    Button facultyData,splashhToTT,splashToAboutCSE,splashToSyllabus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,6 +16,8 @@ public class FirstScreen extends AppCompatActivity {
 
         facultyData=(Button)findViewById(R.id.splashToFacultyData);
         splashhToTT=(Button)findViewById(R.id.splashToTimeTable);
+        splashToSyllabus=(Button)findViewById(R.id.splashToSyllabus);
+        splashToAboutCSE=(Button)findViewById(R.id.splashToAboutCSE);
         facultyData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -26,6 +28,20 @@ public class FirstScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(),MainActivity.class));
+            }
+        });
+
+        splashToAboutCSE.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),AboutCSE.class));
+            }
+        });
+
+        splashToSyllabus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),WebViewManual.class));
             }
         });
     }

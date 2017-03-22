@@ -62,6 +62,7 @@ TextView toolbarText;
     ArrayAdapter<String> Room_no;
     AutoCompleteTextView roomSearch1;
     ArrayList<String> roomdisplay;
+    int totalSlots=0;
 
 
 
@@ -257,14 +258,14 @@ toolbarText=(TextView)getActivity().findViewById(R.id.toolbarText);
                 int time=Integer.parseInt(total.substring(3));
                 int i=0;
                 Log.v("Time new in room",""+time);
-                while(!(time<timeArray[i]) && i<10)
+                while(!(time<timeArray[i]) && i<totalSlots)
                 {
                     Log.v("in while",""+i);
                     i++;
                 }
 
                 if(i!=0)
-                    i--;
+                 //   i--;
 
                 Log.v("slot",""+slotTime[i]);
 
@@ -371,8 +372,7 @@ toolbarText=(TextView)getActivity().findViewById(R.id.toolbarText);
     void dataBaseCaller()
     {
         myDbHelper1  = new DatabaseHelper(getContext());
-        timeArray= new int[]{800, 850, 940, 1030, 1100, 1150, 1240, 1330, 1415, 1505, 1555};
-        slotTime=new int[]{1,2,3,4,5,6,7,8,9,10,11};
+
         try {
             myDbHelper1.createDataBase();
         } catch (IOException ioe) {
@@ -383,9 +383,20 @@ toolbarText=(TextView)getActivity().findViewById(R.id.toolbarText);
         } catch (SQLException sqle) {
             throw sqle;
         }
-
-        froom=myDbHelper1.getroomno();
+        Cursor slots=myDbHelper1.getSlot();
         int i=0;
+        timeArray=new int[slots.getCount()];
+        slotTime=new int[slots.getCount()];
+        while (slots.moveToNext())
+        {
+            timeArray[i]=Integer.parseInt(slots.getString(2));
+            slotTime[i]=Integer.parseInt(slots.getString(0));
+            i++;
+        }
+       // timeArray;
+        totalSlots=i-2;
+        froom=myDbHelper1.getroomno();
+         i=0;
         //RoomNo=new String[froom.getCount()];
         RoomNo=new ArrayList<String>();
         // RoomNo=new HashSet<String>(Arrays.asList(array)).toArray(new String[0]);

@@ -20,6 +20,7 @@ allprojects {
         maven(){
             url "https://oss.sonatype.org/content/repositories/snapshots"
         }
+        maven { url "https://jitpack.io" }
     }
 
   // compile ('com.github.worker8:tourguide:1.0.17-SNAPSHOT@aar') {
