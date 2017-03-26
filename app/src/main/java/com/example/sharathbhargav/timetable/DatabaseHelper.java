@@ -279,4 +279,11 @@ public DatabaseHelper()
         Cursor c=myDataBase.rawQuery("select * from slot",null);
         return c;
     }
+
+
+    public Cursor getFacultyInfo()
+    {
+        Cursor c =myDataBase.rawQuery("select NAME,TAG,fid,designation,qualification,emailid,phoneno from faculty",null);
+        return c;
+    }
 }

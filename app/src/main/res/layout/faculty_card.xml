@@ -21,23 +21,28 @@
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:paddingLeft="5dp"
-            android:weightSum="100">
+            android:weightSum="100"
+            >
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_weight="30">
+                android:layout_weight="30"
+                android:gravity="center"
+                >
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/cardLecturerName"
                     android:textColor="#000000"
                     />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/cardLecturerDesignation"
                     android:textColor="#000000"/>
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -48,13 +53,20 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/cardLecturerMailId"
                     android:textColor="#000000"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/cardLecturerPhoneNo"
+                    android:textColor="#000000"/>
+
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="70">
+                android:layout_weight="70"
+                android:gravity="center">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profileImage"
@@ -62,19 +74,40 @@
                     android:layout_height="96dp"
                     app:civ_border_width="2dp"
                     android:layout_marginTop="3dp"
+                    android:layout_marginBottom="3dp"
                     app:civ_border_color="#000000"/>
             </LinearLayout>
 
         </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="100"
+                android:background="@color/autoComplete"
+                android:id="@+id/LinearLayoutClicked">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:src="@drawable/googlesites"
-           android:scaleType="fitStart"
-            android:background="@color/autoComplete"
-            android:id="@+id/websiteLink"
-            />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/googlesites"
+                   android:scaleType="fitStart"
+                    android:id="@+id/websiteLink"
+                    android:layout_weight="40"
+                    />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="60"
+                    android:text="Click to Visit website"
+                    android:textColor="#000000"
+                    android:textAlignment="center"
+                    android:layout_gravity="center"
+                    android:textSize="15sp"
+                    />
+            </LinearLayout>
 
 
         </LinearLayout>

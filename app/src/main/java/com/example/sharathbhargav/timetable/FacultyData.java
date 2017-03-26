@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.bumptech.glide.Glide;
@@ -44,11 +45,13 @@ public class FacultyData extends AppCompatActivity {
     facultyInfoAdapter adapter;
     StorageReference imagereference;
     DatabaseReference databaseReference;
+    Intent i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_faculty_data);
+        i=new Intent(getApplicationContext(),googleSitesWebView.class);
         searchbox=(FloatingSearchView) findViewById(R.id.searchBox);
         recyclerFacultyInfo=(RecyclerView)findViewById(R.id.recyclerFacultyInfo);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(context);
@@ -69,14 +72,17 @@ public class FacultyData extends AppCompatActivity {
         } catch (SQLException sqle) {
             throw sqle;
         }
-       final Cursor fname=myDbHelper.getnames();
+       final Cursor fname=myDbHelper.getFacultyInfo();
         while(fname.moveToNext())
         {
           final   FacultyCardGeneralInfo temp=new FacultyCardGeneralInfo();
             temp.name=fname.getString(0);
             temp.tag=fname.getString(1);
             temp.fid=fname.getString(2);
-            temp.load();
+            temp.designation=fname.getString(3);
+            temp.qualification=fname.getString(4);
+            temp.mail_id=fname.getString(5);
+            temp.phonNo=fname.getString(6);
            facultyGeneralInfoList.add(temp);
 
         }
@@ -136,9 +142,10 @@ public class FacultyData extends AppCompatActivity {
         @Override
         public void onBindViewHolder(final myViewHolder holder, final int position) {
             holder.cardLecturerName.setText("Name: "+facultyNameListFiltered.get(position).name);
-            holder.cardLecturerDesignation.setText("Designation: Professor & Head of Department");
-            holder.cardLecturerQualification.setText("Qualification: M.Sc., M.Tech., M.S., Ph.D");
-            holder.cardLecturerMailId.setText("Mail-Id: snandagopalan@gmail.com");
+            holder.cardLecturerDesignation.setText("Designation :"+facultyNameListFiltered.get(position).designation);
+            holder.cardLecturerQualification.setText("Qualification :" +facultyNameListFiltered.get(position).qualification);
+            holder.cardLecturerMailId.setText("Mail-Id: "+facultyNameListFiltered.get(position).mail_id);
+            holder.cardLecturerPhoneNo.setText("Phon-No: "+facultyNameListFiltered.get(position).phonNo);
             imagereference= FirebaseStorage.getInstance().getReferenceFromUrl("gs://bitcse-90b07.appspot.com/Faculty-Images/"+facultyNameListFiltered.get(position).fid+".jpg");
 
             Glide.with(getApplicationContext())
@@ -148,13 +155,27 @@ public class FacultyData extends AppCompatActivity {
                     .error(R.drawable.bitlogo)
                     .into(holder.profileImage);
 
-            holder.googleSite.setOnClickListener(new View.OnClickListener() {
+            holder.linearLayoutClicked.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i=new Intent(getApplicationContext(),googleSitesWebView.class);
+
                     int p=position;
-                    i.putExtra("site",facultyNameListFiltered.get(p).web_link);
-                    startActivity(i);
+                    databaseReference.child("facultyLinks").child(facultyNameListFiltered.get(position).fid).addListenerForSingleValueEvent(
+                            new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    i.putExtra("site",dataSnapshot.getValue(String.class));
+                                    startActivity(i);
+                                }
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+
+                            });
+
+
+
                 }
             });
 
@@ -166,19 +187,22 @@ public class FacultyData extends AppCompatActivity {
         }
 
         public class myViewHolder extends RecyclerView.ViewHolder{
-            TextView cardLecturerName,cardLecturerDesignation,cardLecturerQualification,cardLecturerMailId;
+            TextView cardLecturerName,cardLecturerDesignation,cardLecturerQualification,cardLecturerMailId,cardLecturerPhoneNo;
             CardView cardLecturerInfo;
             CircleImageView profileImage;
             ImageView googleSite;
+            LinearLayout linearLayoutClicked;
             public myViewHolder(View itemView) {
                 super(itemView);
                 cardLecturerName=(TextView)itemView.findViewById(R.id.cardLecturerName);
                 cardLecturerDesignation=(TextView)itemView.findViewById(R.id.cardLecturerDesignation);
                 cardLecturerQualification=(TextView)itemView.findViewById(R.id.cardLecturerQualification);
                 cardLecturerMailId=(TextView)itemView.findViewById(R.id.cardLecturerMailId);
+                cardLecturerPhoneNo=(TextView)itemView.findViewById(R.id.cardLecturerPhoneNo);
                 cardLecturerInfo=(CardView)itemView.findViewById(R.id.cardLecturer);
                 profileImage=(CircleImageView)itemView.findViewById(R.id.profileImage);
                 googleSite=(ImageView)itemView.findViewById(R.id.websiteLink);
+                linearLayoutClicked=(LinearLayout)itemView.findViewById(R.id.LinearLayoutClicked);
 
             }
         }
