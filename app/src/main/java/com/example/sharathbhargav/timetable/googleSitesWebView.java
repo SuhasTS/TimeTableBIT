@@ -23,13 +23,16 @@ public class googleSitesWebView extends AppCompatActivity implements View.OnClic
         webviewReloadButton=(Button)findViewById(R.id.webviewReloadButton);
      */
 
-        webView.loadUrl("https://"+site);
+        webView.loadUrl(site);
 
         webView.setWebViewClient(new CustomWebViewClient());
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setLoadWithOverviewMode(true);
         webView.getSettings().setUseWideViewPort(true);
         webView.getSettings().setSupportZoom(true);
+
+        webView.getSettings().setBuiltInZoomControls(true);
+        webView.getSettings().setDisplayZoomControls(false);
    /*     webviewReloadButton.setOnClickListener(this);
         webviewForwardButton.setOnClickListener(this);
         webviewBackButton.setOnClickListener(this);*/
