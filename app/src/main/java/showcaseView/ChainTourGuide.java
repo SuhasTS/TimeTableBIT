@@ -1,4 +1,4 @@
-package com.example.sharathbhargav.timetable;
+package showcaseView;
 
 import android.app.Activity;
 import android.view.View;

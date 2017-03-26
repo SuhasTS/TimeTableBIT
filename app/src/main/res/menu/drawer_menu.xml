@@ -25,9 +25,7 @@
             android:id="@+id/change"
             android:title="Change Time Table"
             android:actionViewClass="android.widget.ImageButton"/>
-    <item
-        android:id="@+id/temp"
-        android:title="About Developers"/>
+
 
 
 </menu>

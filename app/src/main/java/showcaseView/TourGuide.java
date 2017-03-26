@@ -1,11 +1,10 @@
-package com.example.sharathbhargav.timetable;
+package showcaseView;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
-import android.graphics.Color;
 import android.graphics.Point;
 import android.support.v4.view.ViewCompat;
 import android.os.Build;
@@ -16,8 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.example.sharathbhargav.timetable.R;
 
 
 /**

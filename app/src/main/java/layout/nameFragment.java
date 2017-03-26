@@ -1,7 +1,6 @@
 package layout;
 
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.graphics.Color;
@@ -9,9 +8,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.IntegerRes;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
@@ -23,7 +20,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -33,21 +29,20 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 
-import com.example.sharathbhargav.timetable.ChainTourGuide;
+import showcaseView.ChainTourGuide;
 import com.example.sharathbhargav.timetable.DatabaseHelper;
 import com.example.sharathbhargav.timetable.MainActivity;
-import com.example.sharathbhargav.timetable.Overlay;
+import showcaseView.Overlay;
 import com.example.sharathbhargav.timetable.R;
-import com.example.sharathbhargav.timetable.Sequence;
-import com.example.sharathbhargav.timetable.ToolTip;
-import com.example.sharathbhargav.timetable.TourGuide;
+import showcaseView.Sequence;
+import showcaseView.ToolTip;
+import showcaseView.TourGuide;
 
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 
 

@@ -40,7 +40,7 @@ import menu.room;
 * Each fragment is deployed according to the selection in nav drawer*/
 
 
-public class MainActivity extends AppCompatActivity implements  nameFragment.OnFragmentInteractionListener,changeDb.OnFragmentInteractionListener ,dayRoom.OnFragmentInteractionListener, room.OnFragmentInteractionListener, dayFaculty.OnFragmentInteractionListener, daySem.OnFragmentInteractionListener,DisplayEntireWeek.OnFragmentInteractionListener,aboutDev.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements  nameFragment.OnFragmentInteractionListener,changeDb.OnFragmentInteractionListener ,dayRoom.OnFragmentInteractionListener, room.OnFragmentInteractionListener, dayFaculty.OnFragmentInteractionListener, daySem.OnFragmentInteractionListener,DisplayEntireWeek.OnFragmentInteractionListener {
     DatabaseHelper myDbHelper;
    public static boolean firstRun=true;
     public static boolean firstRun2=true;
@@ -127,14 +127,7 @@ public class MainActivity extends AppCompatActivity implements  nameFragment.OnF
                     case R.id.change:
                         changeDB(item);
                         break;
-                    case R.id.temp:
-                        fragmentTransaction=getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.container,new aboutDev());
-                        fragmentTransaction.commit();
-                        item.setChecked(true);
 
-                        drawerLayout.closeDrawers();
-                        break;
 
                 }
 

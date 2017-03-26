@@ -1,4 +1,4 @@
-package com.example.sharathbhargav.timetable;
+package liquidButton;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
