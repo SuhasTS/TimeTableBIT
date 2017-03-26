@@ -29,7 +29,7 @@ public class googleSitesWebView extends AppCompatActivity implements View.OnClic
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setLoadWithOverviewMode(true);
         webView.getSettings().setUseWideViewPort(true);
-
+        webView.getSettings().setSupportZoom(true);
    /*     webviewReloadButton.setOnClickListener(this);
         webviewForwardButton.setOnClickListener(this);
         webviewBackButton.setOnClickListener(this);*/
