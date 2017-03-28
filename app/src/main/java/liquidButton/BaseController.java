@@ -6,14 +6,17 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
 import android.graphics.Canvas;
-
+import android.support.annotation.Keep;
 
 
 import java.lang.ref.WeakReference;
 
+
+
 /**
  * Created by ricogao on 12/05/2016.
  */
+@Keep
 public abstract class BaseController {
     //set WeakReference to avoid memory leak
     private WeakReference<LiquidButton> checkView;
@@ -56,7 +59,7 @@ public abstract class BaseController {
     public void getMeasure(int width, int height) {
         centerX = width / 2;
         centerY = height / 2;
-        radius = width / 4;
+        radius = (width*2) / 5;
     }
 
 

@@ -16,9 +16,9 @@ public class WebViewManual extends AppCompatActivity {
         webView=(WebView) findViewById(R.id.webViewManual);
 
 
-      // webView.loadUrl("https://drive.google.com/open?id=0B1mpkvwZCxwNdVdTUVo5OThoc0E");
-        String pdf = "http://www.pdf995.com/samples/pdf.pdf";
-        webView.loadUrl("http://drive.google.com/viewerng/viewer?embedded=true&url=" + pdf);
+       webView.loadUrl("https://sites.google.com/view/csebitmobile/home");
+
+
         webView.setWebViewClient(new CustomWebViewClient());
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setLoadWithOverviewMode(true);

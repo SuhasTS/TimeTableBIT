@@ -6,11 +6,14 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
+import android.support.annotation.Keep;
 import android.view.animation.OvershootInterpolator;
 
 /**
  * Created by ricogao on 16/05/2016.
  */
+
+@Keep
 public class TickController extends BaseController {
 
     private float[] ticksCoordinates = new float[]{0.29f, 0.525f, 0.445f, 0.675f, 0.74f, 0.45f};

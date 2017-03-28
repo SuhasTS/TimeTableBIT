@@ -3,15 +3,20 @@ package liquidButton;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PointF;
-
+import android.support.annotation.Keep;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
+import proguard.annotation.KeepClassMembers;
+
 /**
  * Created by ricogao on 12/05/2016.
  */
+
+@KeepClassMembers
+@Keep
 abstract class PourBaseController extends BaseController {
 
     PointF pourBottom, pourTop;

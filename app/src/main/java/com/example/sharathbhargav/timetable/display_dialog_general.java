@@ -17,9 +17,16 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import proguard.annotation.Keep;
+import proguard.annotation.KeepClassMembers;
+
 /**
  * Created by SharathBhargav on 02-02-2017.
  */
+
+@Keep
+@KeepClassMembers
+@android.support.annotation.Keep
 public class display_dialog_general {
     RecyclerView recyclerView;
     ArrayList<display> displayArrayList=new ArrayList<display>();

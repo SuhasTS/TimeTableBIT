@@ -7,6 +7,7 @@ import android.animation.ValueAnimator;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Path;
+import android.support.annotation.Keep;
 import android.support.v4.view.animation.FastOutLinearInInterpolator;
 import android.util.Log;
 import android.view.animation.LinearInterpolator;
@@ -19,6 +20,8 @@ import java.util.Random;
  * Created by ricogao on 30/06/2016.
  */
 
+
+@Keep
 public class WaveController extends PourBaseController {
 
     private float liquidProgress;
@@ -32,7 +35,7 @@ public class WaveController extends PourBaseController {
     private Path circlePath;
 
     private final static int LIQUID_COLOR_BLUE = 24;
-    private static final long LIQUID_ANIMATION_DURATION = 5000;
+    private static final long LIQUID_ANIMATION_DURATION = 2000;
 
     //control shift-x on sin wave
     private float phi;

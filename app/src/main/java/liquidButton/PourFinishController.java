@@ -3,6 +3,7 @@ package liquidButton;
 import android.animation.Animator;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.support.annotation.Keep;
 import android.util.Log;
 import android.view.animation.OvershootInterpolator;
 
@@ -11,6 +12,8 @@ import java.util.Random;
 /**
  * Created by ricogao on 12/05/2016.
  */
+
+@Keep
 public class PourFinishController extends PourBaseController {
     private int bounceY;
     private final static String LIQUID_COLOR = "#00FF24";

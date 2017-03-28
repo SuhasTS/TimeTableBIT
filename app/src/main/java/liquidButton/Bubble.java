@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PointF;
+import android.support.annotation.Keep;
 import android.view.animation.DecelerateInterpolator;
 
 
@@ -14,6 +15,8 @@ import java.util.Random;
 /**
  * Created by ricogao on 13/05/2016.
  */
+
+@Keep
 public class Bubble {
 
     private PointF start, end, control, current;

@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.support.annotation.Keep;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -16,6 +17,8 @@ import java.util.List;
 /**
  * Created by ricogao on 12/05/2016.
  */
+
+@Keep
 public class LiquidButton extends View {
 
     private PourFinishListener listener;

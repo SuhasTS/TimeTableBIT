@@ -9,6 +9,7 @@ import android.database.SQLException;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Keep;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,6 +35,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import proguard.annotation.KeepClassMembers;
+import proguard.annotation.KeepImplementations;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,6 +47,11 @@ import java.util.List;
  * Use the {@link dayFaculty#newInstance} factory method to
  * create an instance of this fragment.
  */
+
+@Keep
+@KeepClassMembers
+@proguard.annotation.Keep
+@KeepImplementations
 public class dayFaculty extends Fragment implements DisplayEntireWeek.OnFragmentInteractionListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

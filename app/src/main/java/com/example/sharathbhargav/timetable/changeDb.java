@@ -52,6 +52,14 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import layout.nameFragment;
+import proguard.annotation.Keep;
+import proguard.annotation.KeepClassMembers;
+import proguard.annotation.KeepImplementations;
+
+@KeepClassMembers
+@Keep
+@android.support.annotation.Keep
+@KeepImplementations
 public class changeDb extends Fragment implements nameFragment.OnFragmentInteractionListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

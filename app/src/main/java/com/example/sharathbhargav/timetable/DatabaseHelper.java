@@ -27,7 +27,12 @@ import java.nio.CharBuffer;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import proguard.annotation.Keep;
+import proguard.annotation.KeepClassMembers;
 
+@Keep
+@android.support.annotation.Keep
+@KeepClassMembers
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     String DB_PATH = null;

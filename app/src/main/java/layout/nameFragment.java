@@ -29,6 +29,9 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 
+import proguard.annotation.Keep;
+import proguard.annotation.KeepClassMembers;
+import proguard.annotation.KeepImplementations;
 import showcaseView.ChainTourGuide;
 import com.example.sharathbhargav.timetable.DatabaseHelper;
 import com.example.sharathbhargav.timetable.MainActivity;
@@ -47,7 +50,10 @@ import java.util.List;
 
 
 
-
+@Keep
+@android.support.annotation.Keep
+@KeepClassMembers
+@KeepImplementations
 public class nameFragment extends Fragment {
 
 

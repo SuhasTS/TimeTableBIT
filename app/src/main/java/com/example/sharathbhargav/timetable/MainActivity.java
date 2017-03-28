@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.support.annotation.Keep;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -33,13 +34,16 @@ import java.util.List;
 
 import layout.nameFragment;
 import menu.room;
+import proguard.annotation.KeepClassMembers;
 
 
 /*This activity is the activity that holds all fragments
 * An app drawer is set up for navigation
 * Each fragment is deployed according to the selection in nav drawer*/
 
-
+@Keep
+@proguard.annotation.Keep
+@KeepClassMembers
 public class MainActivity extends AppCompatActivity implements  nameFragment.OnFragmentInteractionListener,changeDb.OnFragmentInteractionListener ,dayRoom.OnFragmentInteractionListener, room.OnFragmentInteractionListener, dayFaculty.OnFragmentInteractionListener, daySem.OnFragmentInteractionListener,DisplayEntireWeek.OnFragmentInteractionListener {
     DatabaseHelper myDbHelper;
    public static boolean firstRun=true;

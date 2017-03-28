@@ -34,6 +34,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import proguard.annotation.Keep;
+import proguard.annotation.KeepClassMembers;
+import proguard.annotation.KeepImplementations;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,6 +47,11 @@ import java.util.List;
  * Use the {@link daySem#newInstance} factory method to
  * create an instance of this fragment.
  */
+
+@Keep
+@android.support.annotation.Keep
+@KeepClassMembers
+@KeepImplementations
 public class daySem extends Fragment implements DisplayEntireWeek.OnFragmentInteractionListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
