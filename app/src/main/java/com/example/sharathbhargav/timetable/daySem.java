@@ -81,6 +81,7 @@ public class daySem extends Fragment implements DisplayEntireWeek.OnFragmentInte
     Cursor semList,res;
     Toolbar toolbar;
     private OnFragmentInteractionListener mListener;
+    View hamburger;
 
     public daySem() {
         // Required empty public constructor
@@ -123,12 +124,14 @@ public class daySem extends Fragment implements DisplayEntireWeek.OnFragmentInte
         databaseCaller();
 
 toolbarText=(TextView)getActivity().findViewById(R.id.toolbarText);
+        toolbar=(Toolbar)getActivity().findViewById(R.id.mainToolbar);
+
+        hamburger= toolbar.getChildAt(1);
         toolbarText.setText("Day schedule : Sem");
         semSpinner=(Spinner)view.findViewById(R.id.daySem_Semspinner);
         daySpinner=(Spinner)view.findViewById(R.id.daySem_daySpinner);
         search=(Button)view.findViewById(R.id.daySemSearchButton);
         viewEntireWeek=(Button)view.findViewById(R.id.daySemViewEntireWeekButton);
-        toolbar=(Toolbar)getActivity().findViewById(R.id.mainToolbar);
         if(MainActivity.firstRun)
             tour1();
         List<String> categories = new ArrayList<String>();
