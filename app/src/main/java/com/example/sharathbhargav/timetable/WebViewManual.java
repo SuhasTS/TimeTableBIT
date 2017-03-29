@@ -14,15 +14,19 @@ public class WebViewManual extends AppCompatActivity {
         setContentView(R.layout.activity_web_view_manual);
 
         webView=(WebView) findViewById(R.id.webViewManual);
-
+        webView.setWebViewClient(new CustomWebViewClient());
 
        webView.loadUrl("https://sites.google.com/view/csebitmobile/home");
 
 
-        webView.setWebViewClient(new CustomWebViewClient());
+
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setLoadWithOverviewMode(true);
         webView.getSettings().setUseWideViewPort(true);
+        webView.getSettings().setAllowFileAccess(true);
+        webView.getSettings().setAllowFileAccessFromFileURLs(true);
+        webView.getSettings().setAllowContentAccess(true);
+        webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
     }
 
     @Override
