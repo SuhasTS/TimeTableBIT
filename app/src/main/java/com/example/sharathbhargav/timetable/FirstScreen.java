@@ -1,6 +1,7 @@
 package com.example.sharathbhargav.timetable;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.Keep;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -39,7 +40,7 @@ public class FirstScreen extends AppCompatActivity {
 
 
         splashhToTT=(LiquidButton) findViewById(R.id.splashToTimeTable);
-        splashhToTT.setButtonText("");
+        splashhToTT.setColor("#EEE8AA");
         splashhToTT.setFillAfter(true);
         splashhToTT.setAutoPlay(true);
         splashhToTT.startPour();
@@ -57,7 +58,7 @@ public class FirstScreen extends AppCompatActivity {
         });
 
         splashToSyllabus=(LiquidButton) findViewById(R.id.splashToSyllabus);
-        splashToSyllabus.setButtonText("");
+        splashToSyllabus.setColor("#8E44AD");
         splashToSyllabus.setFillAfter(true);
         splashToSyllabus.setAutoPlay(true);
         splashToSyllabus.startPour();
@@ -74,7 +75,7 @@ public class FirstScreen extends AppCompatActivity {
         });
 
         splashToAboutCSE=(LiquidButton)findViewById(R.id.splashToAboutCSE);
-        splashToAboutCSE.setButtonText("");
+        splashToAboutCSE.setColor("#F39C12");
         splashToAboutCSE.setFillAfter(true);
         splashToAboutCSE.setAutoPlay(true);
         splashToAboutCSE.startPour();
@@ -92,7 +93,7 @@ public class FirstScreen extends AppCompatActivity {
 
 
         splashToFaculty=(LiquidButton)findViewById(R.id.splashToFacultyData);
-        splashToFaculty.setButtonText("");
+        splashToFaculty.setColor("#00ACC1");
         splashToFaculty.setFillAfter(true);
         splashToFaculty.setAutoPlay(true);
         splashToFaculty.startPour();
@@ -110,7 +111,7 @@ public class FirstScreen extends AppCompatActivity {
 
 
         splashToAboutDev=(LiquidButton)findViewById(R.id.splashToAboutDev);
-        splashToAboutDev.setButtonText("");
+        splashToAboutDev.setColor("#FA8072");
         splashToAboutDev.setFillAfter(true);
         splashToAboutDev.setAutoPlay(true);
         splashToAboutDev.startPour();

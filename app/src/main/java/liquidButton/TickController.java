@@ -1,13 +1,19 @@
 package liquidButton;
 
 import android.animation.Animator;
+import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
 import android.support.annotation.Keep;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.view.animation.OvershootInterpolator;
+
+import com.example.sharathbhargav.timetable.R;
 
 /**
  * Created by ricogao on 16/05/2016.
@@ -25,15 +31,15 @@ public class TickController extends BaseController {
     private final static String LIQUID_COLOR = "#00FF24";
     private Paint tickPaint, circlePaint,paint;
     private float scale;
-    String buttonText;
 
-    public TickController(String text) {
+
+    public TickController(String color) {
         super();
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(Color.WHITE);
         paint.setStyle(Paint.Style.FILL);
 
-buttonText=text;
+
         paint.setColor(Color.BLACK);
         paint.setTextSize(45);
         paint.setTextAlign(Paint.Align.CENTER);
@@ -53,7 +59,8 @@ buttonText=text;
         circlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         circlePaint.setDither(true);
         circlePaint.setStyle(Paint.Style.FILL);
-        circlePaint.setColor(Color.parseColor(LIQUID_COLOR));
+       // circlePaint.setColor(Color.parseColor(LIQUID_COLOR));
+        circlePaint.setColor(Color.parseColor(color));
     }
 
     @Override
@@ -75,7 +82,7 @@ buttonText=text;
         float left = centerX - radius;
         float top = centerY - radius;
 
-        tickPoint1.x = left +(buttonText.length()/2)*35;
+        tickPoint1.x = left + (ticksCoordinates[2] * 2 * radius);
         tickPoint1.y = top + (ticksCoordinates[1] * 2 * radius);
 
         tickPoint2.x = left + (ticksCoordinates[2] * 2 * radius);
@@ -114,9 +121,8 @@ buttonText=text;
         }
 */
      //   canvas.drawPath(tickPath,tickPaint);
-        if(buttonText==null)
-            buttonText="asdf";
-        canvas.drawText(buttonText,tickPoint1.x,tickPoint1.y+0.1f,paint);
+
+      //  canvas.drawText(buttonText,tickPoint1.x,tickPoint1.y+0.1f,paint);
        // canvas.drawTextOnPath("asdff",tickPath,0.25f,0.25f,paint);
     }
 

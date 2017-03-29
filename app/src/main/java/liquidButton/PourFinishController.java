@@ -3,6 +3,7 @@ package liquidButton;
 import android.animation.Animator;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.support.annotation.Keep;
 import android.util.Log;
 import android.view.animation.OvershootInterpolator;
@@ -72,6 +73,7 @@ public class PourFinishController extends PourBaseController {
     }
 
     private void drawBounceBall(Canvas canvas) {
+
         canvas.drawCircle(centerX, bounceY, radius, liquidPaint);
     }
 }

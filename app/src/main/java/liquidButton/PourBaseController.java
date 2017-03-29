@@ -1,6 +1,7 @@
 package liquidButton;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import android.support.annotation.Keep;
@@ -46,7 +47,6 @@ abstract class PourBaseController extends BaseController {
 
         bubblePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         bubblePaint.setStyle(Paint.Style.FILL);
-
         bubbles = new ArrayList<>();
     }
 
@@ -63,6 +63,7 @@ abstract class PourBaseController extends BaseController {
     @Override
     public void draw(Canvas canvas) {
         drawPour(canvas);
+
 
         if (hasBubble()) {
             for (Bubble bubble : bubbles) {

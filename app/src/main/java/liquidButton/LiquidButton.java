@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.support.annotation.Keep;
 import android.util.AttributeSet;
 import android.view.View;
@@ -24,7 +25,7 @@ public class LiquidButton extends View {
     private PourFinishListener listener;
     private boolean isFillAfter;
     private boolean isAutoPlay;
-    String buttonText;
+    String c1;
     private boolean drawFillAfterFlag;
     private Animator startAnim, waveAnim, finishAnim;
 
@@ -72,7 +73,7 @@ public class LiquidButton extends View {
 
     public void setFillAfter(boolean fillAfter) {
         this.isFillAfter = fillAfter;
-        TickController tickController = new TickController(buttonText);
+        TickController tickController = new TickController(c1);
         tickController.setCheckView(this);
        this.finishControllers.add(tickController);
     }
@@ -91,9 +92,9 @@ public class LiquidButton extends View {
 
     }
 
-    public void setButtonText(String s)
+    public void setColor(String c)
     {
-        buttonText=s;
+        c1=c;
     }
     public boolean isAutoPlay() {
         return isAutoPlay;

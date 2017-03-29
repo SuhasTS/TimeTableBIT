@@ -1,10 +1,12 @@
 package com.example.sharathbhargav.timetable;
 import android.*;
 import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
@@ -31,6 +33,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -52,15 +55,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import layout.nameFragment;
-import proguard.annotation.Keep;
-import proguard.annotation.KeepClassMembers;
-import proguard.annotation.KeepImplementations;
-
-@KeepClassMembers
-@Keep
-@android.support.annotation.Keep
-@KeepImplementations
-public class changeDb extends Fragment implements nameFragment.OnFragmentInteractionListener {
+public class changeDb extends Fragment implements nameFragment.OnFragmentInteractionListener, daySem.OnFragmentInteractionListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -88,7 +83,7 @@ public class changeDb extends Fragment implements nameFragment.OnFragmentInterac
     RecyclerView recyclerView;
     ProgressDialog progress;
     TextView toolbarText;
-
+String selected="2017e";
     public changeDb() {
         // Required empty public constructor
     }
@@ -138,11 +133,18 @@ public class changeDb extends Fragment implements nameFragment.OnFragmentInterac
         setDb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                nameFragment fragment = new nameFragment();
+
+                DatabaseHelper.DB_NAME=selected;
+                Log.v("changedb123",selected);
+                daySem fragment = new daySem();
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, fragment)
                         .commit();
+
+
+
+
             }
         });
         updateDb.setOnClickListener(new View.OnClickListener() {
@@ -272,7 +274,7 @@ public class changeDb extends Fragment implements nameFragment.OnFragmentInterac
                     })
                     .setNegativeButton("Later",new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            nameFragment fragment = new nameFragment();
+                            daySem fragment = new daySem();
                             FragmentManager fragmentManager = getFragmentManager();
                             fragmentManager.beginTransaction()
                                     .replace(R.id.container, fragment)
@@ -304,7 +306,7 @@ public class changeDb extends Fragment implements nameFragment.OnFragmentInterac
             }
         }
 
-        mFirebaseDatabase.child("DBFILES").addListenerForSingleValueEvent(new ValueEventListener() {
+        mFirebaseDatabase.child("dbFiles").addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -373,6 +375,12 @@ public class changeDb extends Fragment implements nameFragment.OnFragmentInterac
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+                progress.dismiss();
+                Toast.makeText(getContext(),"Error in updating",Toast.LENGTH_SHORT).show();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.detach(changeDb.this).attach(changeDb.this).commit();
+
+
             }
 
         });
@@ -421,15 +429,20 @@ public class changeDb extends Fragment implements nameFragment.OnFragmentInterac
         public class ViewHolder extends RecyclerView.ViewHolder {
             RadioButton radioButton;
             TextView changeDbText;
+            LinearLayout ll;
             public ViewHolder(View itemView) {
                 super(itemView);
+                ll=(LinearLayout) itemView.findViewById(R.id.changeDBLinear);
                 radioButton=(RadioButton)itemView.findViewById(R.id.radioButton);
                 changeDbText=(TextView)itemView.findViewById(R.id.changeDbText);
                 //Added to handle radio button check
-                radioButton.setOnClickListener(new View.OnClickListener() {
+                ll.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         lastCheckedPosition = getAdapterPosition();
+
+                        selected=fileDirExistingList.get(lastCheckedPosition);
+                        Log.v("changedb123","in bind view "+selected);
                         notifyItemRangeChanged(0, fileDirExistingList.size());
 
                     }

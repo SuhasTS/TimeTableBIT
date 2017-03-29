@@ -15,8 +15,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +39,11 @@ import java.util.List;
 import proguard.annotation.Keep;
 import proguard.annotation.KeepClassMembers;
 import proguard.annotation.KeepImplementations;
+import showcaseView.ChainTourGuide;
+import showcaseView.Overlay;
+import showcaseView.Sequence;
+import showcaseView.ToolTip;
+import showcaseView.TourGuide;
 
 
 /**
@@ -72,6 +79,7 @@ public class daySem extends Fragment implements DisplayEntireWeek.OnFragmentInte
     RecyclerView recyclerView;
    // public ArrayList<String> res_sem;
     Cursor semList,res;
+    Toolbar toolbar;
     private OnFragmentInteractionListener mListener;
 
     public daySem() {
@@ -120,8 +128,9 @@ toolbarText=(TextView)getActivity().findViewById(R.id.toolbarText);
         daySpinner=(Spinner)view.findViewById(R.id.daySem_daySpinner);
         search=(Button)view.findViewById(R.id.daySemSearchButton);
         viewEntireWeek=(Button)view.findViewById(R.id.daySemViewEntireWeekButton);
-
-
+        toolbar=(Toolbar)getActivity().findViewById(R.id.mainToolbar);
+        if(MainActivity.firstRun)
+            tour1();
         List<String> categories = new ArrayList<String>();
         categories.add("Monday");
         categories.add("Tuesday");
@@ -329,5 +338,52 @@ toolbarText=(TextView)getActivity().findViewById(R.id.toolbarText);
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
+    void tour1()
+    {
+        Log.v("first run","in tour1 "+MainActivity.firstRun);
+        MainActivity.firstRun=false;
+
+        View v= new MainActivity().getNavButtonView(toolbar);
+        Log.v("hamburger","dra123"+v.toString());
+        ChainTourGuide tourGuide1 = ChainTourGuide.init(getActivity())
+                .setToolTip(new ToolTip()
+                        .setTitle("Tour")
+                        .setDescription("Click this button to view the entire week schedule of the selected class")
+                        .setGravity(Gravity.BOTTOM)
+                )
+                // note that there is no Overlay here, so the default one will be used
+                .playLater(viewEntireWeek);
+
+        ChainTourGuide tourGuide2 = ChainTourGuide.init(getActivity())
+                .setToolTip(new ToolTip()
+                        .setTitle("Menu Tutorial")
+                        .setDescription("Press the button to get other options")
+                        .setGravity(Gravity.BOTTOM | Gravity.LEFT)
+                        .setBackgroundColor(Color.parseColor("#c0392b"))
+                )
+                .setOverlay(new Overlay()
+                                .setBackgroundColor(Color.parseColor("#EE2c3e50"))
+                        //    .setEnterAnimation(mEnterAnimation)
+                        //   .setExitAnimation(mExitAnimation)
+                ).with(TourGuide.Technique.HORIZONTAL_LEFT)
+                .playLater(v);
+
+
+        Sequence sequence = new Sequence.SequenceBuilder()
+                .add(tourGuide1, tourGuide2)
+                .setDefaultOverlay(new Overlay()
+                        //   .setEnterAnimation(mEnterAnimation)
+                        //   .setExitAnimation(mExitAnimation)
+                )
+                .setDefaultPointer(null)
+                .setContinueMethod(Sequence.ContinueMethod.OVERLAY)
+                .build();
+
+
+        ChainTourGuide.init(getActivity()).playInSequence(sequence);
+    }
+
 }
 

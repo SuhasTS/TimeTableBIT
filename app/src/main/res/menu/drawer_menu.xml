@@ -4,18 +4,19 @@
     >
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/sem"
+            android:title="Day Schedule:Sem"/>
+        <item
+            android:id="@+id/faculty"
+            android:title="Day Schedule:Faculty"/>
+        <item
             android:id="@+id/name"
             android:title="Lecturer name"/>
 
         <item
             android:id="@+id/room"
             android:title="Room number"/>
-        <item
-            android:id="@+id/sem"
-            android:title="Day Schedule:Sem"/>
-        <item
-            android:id="@+id/faculty"
-            android:title="Day Schedule:Faculty"/>
+
         <item
             android:id="@+id/dayRoom"
             android:title="Day Schedule:Room"/>

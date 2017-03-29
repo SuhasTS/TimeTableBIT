@@ -12,7 +12,7 @@ public class AboutCSE extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_cse);
         aboutCSE=(WebView) findViewById(R.id.webViewAboutCSE);
-        aboutCSE.loadUrl("file:///android_asset/test.html");
+        aboutCSE.loadUrl("https://sites.google.com/view/csebitmobile/about-cse");
         aboutCSE.setWebViewClient(new CustomWebViewClient());
         aboutCSE.getSettings().setJavaScriptEnabled(true);
         aboutCSE.getSettings().setLoadWithOverviewMode(true);

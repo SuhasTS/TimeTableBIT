@@ -37,7 +37,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     String DB_PATH = null;
 
-    private static String DB_NAME = "2017e";
+    public static String DB_NAME = "2017e";
     private SQLiteDatabase myDataBase;
     private  Context myContext=null;
 

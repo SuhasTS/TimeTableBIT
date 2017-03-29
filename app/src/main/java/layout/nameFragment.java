@@ -181,8 +181,7 @@ Toolbar toolbar;
         final Spinner spinner = (Spinner) view.findViewById(R.id.nameDaySpinner);
 
         // Spinner click listener
-if(MainActivity.firstRun)
-tour1();
+
 
 
         nameInput.setDropDownBackgroundDrawable(new ColorDrawable(getContext().getResources().getColor(R.color.autoComplete)));
@@ -418,50 +417,6 @@ tour1();
     }
 
 
-    void tour1()
-    {
-        Log.v("first run","in tour1 "+MainActivity.firstRun);
-        MainActivity.firstRun=false;
-
-        View v= new MainActivity().getNavButtonView(toolbar);
-        Log.v("hamburger","dra123"+v.toString());
-        ChainTourGuide tourGuide1 = ChainTourGuide.init(getActivity())
-                .setToolTip(new ToolTip()
-                        .setTitle("Input Tutorial")
-                        .setDescription("Enter faculty name you want to search or the respective queries in respective options\nin the menu")
-                        .setGravity(Gravity.BOTTOM)
-                )
-                // note that there is no Overlay here, so the default one will be used
-                .playLater(nameInput);
-
-        ChainTourGuide tourGuide2 = ChainTourGuide.init(getActivity())
-                .setToolTip(new ToolTip()
-                        .setTitle("Menu Tutorial")
-                        .setDescription("Press the button to get other options")
-                        .setGravity(Gravity.BOTTOM | Gravity.LEFT)
-                        .setBackgroundColor(Color.parseColor("#c0392b"))
-                )
-                .setOverlay(new Overlay()
-                        .setBackgroundColor(Color.parseColor("#EE2c3e50"))
-                    //    .setEnterAnimation(mEnterAnimation)
-                     //   .setExitAnimation(mExitAnimation)
-                ).with(TourGuide.Technique.HORIZONTAL_LEFT)
-                .playLater(v);
-
-
-        Sequence sequence = new Sequence.SequenceBuilder()
-                .add(tourGuide1, tourGuide2)
-                .setDefaultOverlay(new Overlay()
-                     //   .setEnterAnimation(mEnterAnimation)
-                     //   .setExitAnimation(mExitAnimation)
-                )
-                .setDefaultPointer(null)
-                .setContinueMethod(Sequence.ContinueMethod.OVERLAY)
-                .build();
-
-
-        ChainTourGuide.init(getActivity()).playInSequence(sequence);
-    }
 
 
 

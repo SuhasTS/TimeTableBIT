@@ -3,6 +3,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
+import android.net.ConnectivityManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -18,16 +19,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.bumptech.glide.Glide;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.vstechlab.easyfonts.EasyFonts;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -44,7 +44,7 @@ public class FacultyData extends AppCompatActivity {
     RecyclerView recyclerFacultyInfo;
     facultyInfoAdapter adapter;
     StorageReference imagereference;
-    DatabaseReference databaseReference;
+
     Intent i;
 
     @Override
@@ -59,7 +59,7 @@ public class FacultyData extends AppCompatActivity {
         recyclerFacultyInfo.setLayoutManager(layoutManager);
         adapter=new facultyInfoAdapter();
 
-        databaseReference= FirebaseDatabase.getInstance().getReferenceFromUrl("https://bitcse-90b07.firebaseio.com/");
+
     //  imagereference= FirebaseStorage.getInstance().getReferenceFromUrl("gs://timetable-dbdd5.appspot.com/nanda.jpg");
         myDbHelper  = new DatabaseHelper(getApplicationContext());
         try {
@@ -83,6 +83,9 @@ public class FacultyData extends AppCompatActivity {
             temp.qualification=fname.getString(4);
             temp.mail_id=fname.getString(5);
             temp.phonNo=fname.getString(6);
+            if(temp.fid.equals("0"))
+            {continue;}
+            else
            facultyGeneralInfoList.add(temp);
 
         }
@@ -136,6 +139,7 @@ public class FacultyData extends AppCompatActivity {
             View itemView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.faculty_card, parent, false);
 
+
             return new facultyInfoAdapter.myViewHolder(itemView);
         }
 
@@ -152,7 +156,7 @@ public class FacultyData extends AppCompatActivity {
                     .using(new FirebaseImageLoader())
                     .load(imagereference)
                     .centerCrop()
-                    .error(R.drawable.bitlogo)
+                    .error(R.drawable.profile)
                     .into(holder.profileImage);
 
             holder.linearLayoutClicked.setOnClickListener(new View.OnClickListener() {
@@ -160,21 +164,25 @@ public class FacultyData extends AppCompatActivity {
                 public void onClick(View v) {
 
                     int p=position;
-                    databaseReference.child("facultyLinks").child(facultyNameListFiltered.get(position).fid).addListenerForSingleValueEvent(
-                            new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    i.putExtra("site",dataSnapshot.getValue(String.class));
-                                    startActivity(i);
-                                }
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
+                  //databaseReference.child("facultyLinks").child(facultyNameListFiltered.get(position).fid).addListenerForSingleValueEvent(
+                  //        new ValueEventListener() {
+                  //            @Override
+                  //            public void onDataChange(DataSnapshot dataSnapshot) {
+                  //                i.putExtra("site",dataSnapshot.getValue(String.class));
+                  //                startActivity(i);
+                  //            }
+                  //            @Override
+                  //            public void onCancelled(DatabaseError databaseError) {
 
-                                }
+                  //            }
 
-                            });
+                  //        });
 
-
+                    i.putExtra("fid",facultyNameListFiltered.get(position).fid);
+                    if(isInternetAvailable(getApplicationContext()))
+                    startActivity(i);
+                    else
+                        Toast.makeText(getApplicationContext(),"No internet available. Please try again later",Toast.LENGTH_SHORT).show();
 
                 }
             });
@@ -187,10 +195,10 @@ public class FacultyData extends AppCompatActivity {
         }
 
         public class myViewHolder extends RecyclerView.ViewHolder{
-            TextView cardLecturerName,cardLecturerDesignation,cardLecturerQualification,cardLecturerMailId,cardLecturerPhoneNo;
+            TextView cardLecturerName,cardLecturerDesignation,cardLecturerQualification,cardLecturerMailId,cardLecturerPhoneNo,googleSiteText;
             CardView cardLecturerInfo;
             CircleImageView profileImage;
-            ImageView googleSite;
+
             LinearLayout linearLayoutClicked;
             public myViewHolder(View itemView) {
                 super(itemView);
@@ -201,7 +209,8 @@ public class FacultyData extends AppCompatActivity {
                 cardLecturerPhoneNo=(TextView)itemView.findViewById(R.id.cardLecturerPhoneNo);
                 cardLecturerInfo=(CardView)itemView.findViewById(R.id.cardLecturer);
                 profileImage=(CircleImageView)itemView.findViewById(R.id.profileImage);
-                googleSite=(ImageView)itemView.findViewById(R.id.websiteLink);
+               googleSiteText=(TextView)itemView.findViewById(R.id.googleSiteText);
+                googleSiteText.setTypeface(EasyFonts.freedom(getApplicationContext()));
                 linearLayoutClicked=(LinearLayout)itemView.findViewById(R.id.LinearLayoutClicked);
 
             }
@@ -230,6 +239,12 @@ public class FacultyData extends AppCompatActivity {
 
         }
         adapter.notifyDataSetChanged();
+    }
+
+    public boolean isInternetAvailable(Context context) {
+        final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
+        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
+
     }
     }
 

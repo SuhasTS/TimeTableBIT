@@ -29,6 +29,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+
 import java.lang.reflect.Field;
 import java.util.List;
 
@@ -99,8 +101,8 @@ public class MainActivity extends AppCompatActivity implements  nameFragment.OnF
         Drawable d = toolbar.getNavigationIcon();
 
         fragmentTransaction=getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.container,new nameFragment());
-        toolbarText.setText("Search by Faculty name");
+        fragmentTransaction.add(R.id.container,new daySem());
+     //   toolbarText.setText("Search by Faculty name");
         fragmentTransaction.commit();
 
 
@@ -268,6 +270,7 @@ public class MainActivity extends AppCompatActivity implements  nameFragment.OnF
         SharedPreferences sp = getSharedPreferences("shared", Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.putBoolean("firstRun", firstRun);
+        editor.putString("db",DatabaseHelper.DB_NAME);
         editor.commit();
 
 
@@ -278,6 +281,7 @@ public class MainActivity extends AppCompatActivity implements  nameFragment.OnF
         super.onResume();
         SharedPreferences sp = getSharedPreferences("shared", Activity.MODE_PRIVATE);
         firstRun = sp.getBoolean("firstRun", true);
+        DatabaseHelper.DB_NAME=sp.getString("db","2017e");
         Log.v("first","In main "+firstRun);
     }
 
