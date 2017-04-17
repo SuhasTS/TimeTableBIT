@@ -27,12 +27,13 @@ import com.firebase.ui.storage.images.FirebaseImageLoader;
 
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.vstechlab.easyfonts.EasyFonts;
+
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import easyFonts.EasyFonts;
 
 public class FacultyData extends AppCompatActivity {
     //ArrayList<String> facultyNameList = new ArrayList<>();
@@ -44,7 +45,7 @@ public class FacultyData extends AppCompatActivity {
     RecyclerView recyclerFacultyInfo;
     facultyInfoAdapter adapter;
     StorageReference imagereference;
-
+    TextView topHeading;
     Intent i;
 
     @Override
@@ -58,7 +59,8 @@ public class FacultyData extends AppCompatActivity {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerFacultyInfo.setLayoutManager(layoutManager);
         adapter=new facultyInfoAdapter();
-
+        topHeading=(TextView)findViewById(R.id.topHeading);
+        topHeading.setTypeface(EasyFonts.androidNationBold(this));
 
     //  imagereference= FirebaseStorage.getInstance().getReferenceFromUrl("gs://timetable-dbdd5.appspot.com/nanda.jpg");
         myDbHelper  = new DatabaseHelper(getApplicationContext());

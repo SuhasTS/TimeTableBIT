@@ -4,7 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.vstechlab.easyfonts.EasyFonts;
+import easyFonts.EasyFonts;
+
 
 public class aboutDevelopers extends AppCompatActivity {
 
@@ -23,6 +24,7 @@ public class aboutDevelopers extends AppCompatActivity {
         des3=(TextView)findViewById(R.id.aboutDevdes3);
         name4=(TextView)findViewById(R.id.aboutDevName4);
         des4=(TextView)findViewById(R.id.aboutDevdes4);
+
 
         name1.setTypeface(EasyFonts.captureIt(this));
         name2.setTypeface(EasyFonts.captureIt(this));

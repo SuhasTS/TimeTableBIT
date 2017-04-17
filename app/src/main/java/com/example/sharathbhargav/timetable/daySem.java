@@ -354,7 +354,7 @@ toolbarText=(TextView)getActivity().findViewById(R.id.toolbarText);
                 .setToolTip(new ToolTip()
                         .setTitle("Tour")
                         .setDescription("Click this button to view the entire week schedule of the selected class")
-                        .setGravity(Gravity.BOTTOM)
+                        .setGravity(Gravity.TOP)
                 )
                 // note that there is no Overlay here, so the default one will be used
                 .playLater(viewEntireWeek);
@@ -363,7 +363,7 @@ toolbarText=(TextView)getActivity().findViewById(R.id.toolbarText);
                 .setToolTip(new ToolTip()
                         .setTitle("Menu Tutorial")
                         .setDescription("Press the button to get other options")
-                        .setGravity(Gravity.BOTTOM | Gravity.LEFT)
+                        .setGravity(Gravity.BOTTOM | Gravity.RIGHT)
                         .setBackgroundColor(Color.parseColor("#c0392b"))
                 )
                 .setOverlay(new Overlay()

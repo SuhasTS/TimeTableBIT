@@ -10,7 +10,7 @@ import android.view.animation.AccelerateInterpolator;
  */
 public class PourStartController extends PourBaseController {
 
-    private static final int POUR_START_ANIMATION_DURATION = 500;
+    private static final int POUR_START_ANIMATION_DURATION = 400;
     private static final String LIQUID_COLOUR = "#FF0024";
     private int pourLength;
 

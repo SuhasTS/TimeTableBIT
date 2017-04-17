@@ -201,6 +201,7 @@ public class dayFaculty extends Fragment implements DisplayEntireWeek.OnFragment
                     @Override
                     public void onClick(View v) {
                         String lName =nameInput.getText().toString();
+                        nameInput.setText("");
                         if(lName.length()>1) {
                             DisplayEntireWeek fragment = new DisplayEntireWeek();
                             Bundle b = new Bundle();

@@ -447,6 +447,17 @@ String selected="2017e";
 
                     }
                 });
+                radioButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        lastCheckedPosition = getAdapterPosition();
+
+                        selected=fileDirExistingList.get(lastCheckedPosition);
+                        Log.v("changedb123","in bind view "+selected);
+                        notifyItemRangeChanged(0, fileDirExistingList.size());
+                    }
+                });
+
             }
         }
     }
