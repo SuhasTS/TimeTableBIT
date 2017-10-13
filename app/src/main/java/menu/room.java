@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,8 +25,9 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.example.sharathbhargav.timetable.DatabaseHelper;
-import com.example.sharathbhargav.timetable.R;
+import com.bit.cse.DatabaseHelper;
+import com.bit.cse.R;
+
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -218,46 +218,45 @@ toolbarText=(TextView)getActivity().findViewById(R.id.toolbarText);
                 if(ind==R.id.roomRadioCurrent)
                 {
                     total=Hour.format(calendar.getTime());
-                    Log.v("Time new in room","current");
+
                 }
                 else if(ind==R.id.roomRadioCustom)
                 {
                     day=customDay[0].substring(0,3);
-                    Log.v("Time new in room","custom");
+
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         if(timePicker.getMinute()<10)
                             total=day+timePicker.getHour()+"0"+timePicker.getMinute();
                         else
                             total=day+timePicker.getHour()+timePicker.getMinute();
-                        Log.v("Time in picke 21 api",total);
+
 
                     }
                     else {
                         if(timePicker.getCurrentMinute()<10) {
                             total = day + timePicker.getCurrentHour() + "0" + timePicker.getCurrentMinute();
-                            Log.v("Time in custom else if",total);
+
                         }
                         else {
                             total = day + timePicker.getCurrentHour() + timePicker.getCurrentMinute();
-                            Log.v("Time  custom else else",total);
+
                         }
-                        //    Log.v("Time in picke 21 api","else"+timePicker.getHour()+""+timePicker.getMinute());
-                        //  Log.v("Time in picke 17 api","else"+total);
+
                     }
                 }
                 int time=Integer.parseInt(total.substring(3));
                 int i=0;
-                Log.v("Time new in room",""+time);
+
                 while(!(time<timeArray[i]) && i<totalSlots)
                 {
-                    Log.v("in while",""+i);
+
                     i++;
                 }
 
                 if(i!=0)
                  //   i--;
 
-                Log.v("slot",""+slotTime[i]);
+
 
                 day=day.toUpperCase();
                 lName=roomSearch.getText().toString();
@@ -277,7 +276,7 @@ toolbarText=(TextView)getActivity().findViewById(R.id.toolbarText);
                             res = myDbHelper1.getdataRoom(lName, day, 14);
 
                     }
-                    Log.v("Method", "Room method" + res.getCount() + "    " + lName);
+
                     //while(res.moveToNext()) {
                     //    roomDisplayFaculty.setText("Name: "+res.getString(0));
                     //    roomDisplaySem.setText("Class: "+res.getString(1));
@@ -287,7 +286,7 @@ toolbarText=(TextView)getActivity().findViewById(R.id.toolbarText);
                     roomdisplay = new ArrayList<String>();
                     while (res.moveToNext()) {
                         //result="Class: "+res.getString(1)+"\n"+"Subject: "+res.getString(2)+"Name: "+res.getString(0)+"\n";
-                        //Log.v("Room result",""+res.getString(0));
+
                         roomdisplay.add(res.getString(0));
                         roomdisplay.add(res.getString(1));
                         roomdisplay.add(res.getString(2));
@@ -297,7 +296,7 @@ toolbarText=(TextView)getActivity().findViewById(R.id.toolbarText);
                     String result = "Faculty :";
                     for (int j = 0; j < roomdisplay.size(); j = j + 3) {
                         result += roomdisplay.get(j) + "\n\t\t\t\t\t\t";
-                        Log.v("roomdisplay", roomdisplay.get(j) + " " + j);
+
                     }
                     result = result.substring(0, result.length() - 7);
                     String result1 = null;

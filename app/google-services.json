@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "99037691542",
+    "firebase_url": "https://bitcse-90b07.firebaseio.com",
+    "project_id": "bitcse-90b07",
+    "storage_bucket": "bitcse-90b07.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:99037691542:android:90a5e57efedc59f7",
+        "android_client_info": {
+          "package_name": "com.example.sharathbhargav.timetable"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "99037691542-gob7rdi9speg06j1f75sqpquu3j8jetd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASO3XBsbIstYnxl13qFIS1QUZRvyNWlz8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:99037691542:android:3d22671a12327a6f",
+        "android_client_info": {
+          "package_name": "com.bit.cse"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "99037691542-gob7rdi9speg06j1f75sqpquu3j8jetd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASO3XBsbIstYnxl13qFIS1QUZRvyNWlz8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

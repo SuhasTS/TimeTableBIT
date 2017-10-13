@@ -17,7 +17,7 @@ import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.example.sharathbhargav.timetable.R;
+import com.bit.cse.R;
 
 
 /**

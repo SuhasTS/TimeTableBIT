@@ -2,7 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.sharathbhargav.timetable.changeDb">
+    tools:context="com.bit.cse.changeDb">
+
+
 
     <!-- TODO: Update blank fragment layout -->
     <android.support.v7.widget.RecyclerView
@@ -14,10 +16,23 @@
         android:layout_centerInParent="true"
         android:layout_alignParentTop="true" />
 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/recycler_view_radio"
+        android:layout_marginTop="10dp"
+        android:textSize="25dp"
+        android:textColor="@color/Abit_Black"
+        android:id="@+id/changeDbCurrentDbText"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"/>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Set Time Table"
+
         android:id="@+id/buttonSetTimeTable"
         android:textStyle="normal"
         android:textSize="25dp"

@@ -1,19 +1,13 @@
 package liquidButton;
 
 import android.animation.Animator;
-import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
 import android.support.annotation.Keep;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
 import android.view.animation.OvershootInterpolator;
-
-import com.example.sharathbhargav.timetable.R;
 
 /**
  * Created by ricogao on 16/05/2016.

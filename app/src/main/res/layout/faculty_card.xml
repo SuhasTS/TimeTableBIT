@@ -28,6 +28,7 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:layout_weight="30"
+                    android:id="@+id/facultyCall"
                     android:gravity="center"
                     >
                     <TextView
@@ -57,7 +58,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/cardLecturerPhoneNo"
-                        android:textColor="#000000"/>
+                        android:textStyle="bold"
+                        android:textColor="#0000FF"/>
 
 
                 </LinearLayout>

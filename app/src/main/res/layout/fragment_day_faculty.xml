@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="12dp"
-    tools:context="com.example.sharathbhargav.timetable.dayFaculty">
+    tools:context="com.bit.cse.dayFaculty">
 
     <!-- TODO: Update blank fragment layout -->
 

@@ -5,7 +5,7 @@
     android:id="@+id/activity_faculty_data"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.sharathbhargav.timetable.FacultyData"
+    tools:context="com.bit.cse.FacultyData"
     android:orientation="vertical"
     android:background="@color/fragments_background">
     <TextView

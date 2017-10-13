@@ -19,7 +19,7 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.support.annotation.Keep;
 
-import com.example.sharathbhargav.timetable.R;
+import com.bit.cse.R;
 
 
 /**
